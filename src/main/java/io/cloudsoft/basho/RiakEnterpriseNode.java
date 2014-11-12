@@ -4,6 +4,7 @@ import brooklyn.config.ConfigKey;
 import brooklyn.entity.basic.ConfigKeys;
 import brooklyn.entity.nosql.riak.RiakNode;
 import brooklyn.entity.proxying.ImplementedBy;
+import brooklyn.event.basic.PortAttributeSensorAndConfigKey;
 
 @ImplementedBy(RiakEnterpriseNodeImpl.class)
 public interface RiakEnterpriseNode extends RiakNode {
@@ -11,7 +12,12 @@ public interface RiakEnterpriseNode extends RiakNode {
             "riak.advancedConfig.templateUrl", "Template file (in freemarker format) for the advanced.config file",
             "classpath://advanced.config");
 
+    PortAttributeSensorAndConfigKey CLUSTER_MANAGER_PORT = new PortAttributeSensorAndConfigKey("riak.replication.cluster.manager.port",
+            "Cluster Manager Port", "9080+");
+
     void initializeCluster(String name);
 
     void addReplicationSink(RiakEnterpriseCluster upCluster);
+
+    Integer getRiakClusterManagerPort();
 }

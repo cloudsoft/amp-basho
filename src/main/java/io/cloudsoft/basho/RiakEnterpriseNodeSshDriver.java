@@ -1,9 +1,7 @@
 package io.cloudsoft.basho;
 
 import brooklyn.entity.basic.lifecycle.ScriptHelper;
-import brooklyn.entity.nosql.couchbase.CouchbaseNode;
 import brooklyn.entity.nosql.riak.RiakCluster;
-import brooklyn.entity.nosql.riak.RiakNode;
 import brooklyn.entity.nosql.riak.RiakNodeImpl;
 import brooklyn.entity.nosql.riak.RiakNodeSshDriver;
 import brooklyn.entity.software.SshEffectorTasks;
@@ -51,8 +49,7 @@ public class RiakEnterpriseNodeSshDriver extends RiakNodeSshDriver implements Ri
     public void addReplicationSink(RiakEnterpriseCluster upCluster) {
         String targetClusterName = upCluster.getAttribute(RiakEnterpriseCluster.CLUSTER_NAME);
         RiakEnterpriseNode targetNode = (RiakEnterpriseNode)upCluster.getAttribute(RiakCluster.RIAK_CLUSTER_NODES).keySet().iterator().next();
-        // FIXME: Use sensor for port
-        String targetHostAndPort = BrooklynAccessUtils.getBrooklynAccessibleAddress(targetNode, 9080).toString();
+        String targetHostAndPort = BrooklynAccessUtils.getBrooklynAccessibleAddress(targetNode, targetNode.getRiakClusterManagerPort()).toString();
         List<String> commands = ImmutableList.<String>builder()
                 .add(sudo(format("%s connect %s", getRiakReplCommand(), targetHostAndPort)))
                 .add(sudo(format("%s realtime enable %s", getRiakReplCommand(), targetClusterName)))

@@ -23,4 +23,9 @@ public class RiakEnterpriseNodeImpl extends RiakNodeImpl implements RiakEnterpri
    public void addReplicationSink(RiakEnterpriseCluster upCluster) {
       getDriver().addReplicationSink(upCluster);
    }
+
+   @Override
+   public Integer getRiakClusterManagerPort() {
+      return getAttribute(CLUSTER_MANAGER_PORT);
+   }
 }
