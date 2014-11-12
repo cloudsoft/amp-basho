@@ -1,0 +1,15 @@
+name: Riak Fabric
+
+locations:
+- softlayer:ams01
+- softlayer:lon02
+
+services:
+- type: io.cloudsoft.basho.RiakEnterpriseFabric
+  brooklyn.config:
+    cluster.initial.size: 3
+    download.url.rhelcentos: http://s3.amazonaws.com/private.downloads.basho.com/riak_ee/de6708/2.0/2.0.1/rhel/6/riak-ee-2.0.1-1.el6.x86_64.rpm
+    provisioning.properties:
+      osFamily: centos
+      minCores: 2
+      minRam: 2000
