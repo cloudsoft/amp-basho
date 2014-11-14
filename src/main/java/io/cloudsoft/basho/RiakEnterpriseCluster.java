@@ -16,7 +16,7 @@ public interface RiakEnterpriseCluster extends RiakCluster {
             new BasicAttributeSensorAndConfigKey.StringAttributeSensorAndConfigKey("riak.cluster.clusterName",
                     "Unique name of the cluster, used in multi-datacenter replication");
 
-    AttributeSensor<Boolean> CLUSTER_INITIALIZED = Sensors.newBooleanSensor("riak.cluster.initialized",
+    AttributeSensor<Boolean> REPLICATION_INITIALIZED = Sensors.newBooleanSensor("riak.replication.initialized",
             "Indicates that the cluster has been initialized and is ready to participate in MDC replication");
 
     AttributeSensor<Set<RiakEnterpriseCluster>> REPLICATION_SINKS = Sensors.newSensor(new TypeToken<Set<RiakEnterpriseCluster>>(){},

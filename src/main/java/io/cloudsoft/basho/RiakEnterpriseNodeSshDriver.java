@@ -1,5 +1,8 @@
 package io.cloudsoft.basho;
 
+import brooklyn.entity.Entity;
+import brooklyn.entity.basic.Attributes;
+import brooklyn.entity.basic.EntityPredicates;
 import brooklyn.entity.basic.lifecycle.ScriptHelper;
 import brooklyn.entity.nosql.riak.RiakCluster;
 import brooklyn.entity.nosql.riak.RiakNodeImpl;
@@ -9,7 +12,9 @@ import brooklyn.location.access.BrooklynAccessUtils;
 import brooklyn.location.basic.SshMachineLocation;
 import brooklyn.util.net.Urls;
 import brooklyn.util.task.DynamicTasks;
+import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -48,7 +53,14 @@ public class RiakEnterpriseNodeSshDriver extends RiakNodeSshDriver implements Ri
     @Override
     public void addReplicationSink(RiakEnterpriseCluster upCluster) {
         String targetClusterName = upCluster.getAttribute(RiakEnterpriseCluster.CLUSTER_NAME);
-        RiakEnterpriseNode targetNode = (RiakEnterpriseNode)upCluster.getAttribute(RiakCluster.RIAK_CLUSTER_NODES).keySet().iterator().next();
+        Preconditions.checkNotNull(targetClusterName, "Cannot add unnamed cluster as a sink: " + upCluster);
+        Iterable<Entity> upEntities = Iterables.filter(upCluster.getMembers(), EntityPredicates.attributeEqualTo(Attributes.SERVICE_UP, Boolean.TRUE));
+        RiakEnterpriseNode targetNode;
+        if (upEntities.iterator().hasNext()) {
+            targetNode = (RiakEnterpriseNode) upEntities.iterator().next();
+        } else {
+            throw new IllegalStateException(String.format("Cannot add %s as a sink as it has no running nodes", upCluster));
+        }
         String targetHostAndPort = BrooklynAccessUtils.getBrooklynAccessibleAddress(targetNode, targetNode.getRiakClusterManagerPort()).toString();
         List<String> commands = ImmutableList.<String>builder()
                 .add(sudo(format("%s connect %s", getRiakReplCommand(), targetHostAndPort)))
@@ -57,7 +69,8 @@ public class RiakEnterpriseNodeSshDriver extends RiakNodeSshDriver implements Ri
                 .build();
         ScriptHelper addSink = newScript("addSink")
                 .body.append(commands)
-                .failIfBodyEmpty();
+                .gatherOutput()
+                .failOnNonZeroResultCode();
         addSink.execute();
     }
 

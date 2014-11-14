@@ -15,7 +15,7 @@ public class RiakEnterpriseNodeImpl extends RiakNodeImpl implements RiakEnterpri
    }
 
    @Override
-   public void initializeCluster(String name) {
+   public void initializeReplication(String name) {
       getDriver().initializeCluster(name);
    }
 

@@ -15,7 +15,7 @@ public interface RiakEnterpriseNode extends RiakNode {
     PortAttributeSensorAndConfigKey CLUSTER_MANAGER_PORT = new PortAttributeSensorAndConfigKey("riak.replication.cluster.manager.port",
             "Cluster Manager Port", "9080+");
 
-    void initializeCluster(String name);
+    void initializeReplication(String name);
 
     void addReplicationSink(RiakEnterpriseCluster upCluster);
 

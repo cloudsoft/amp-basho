@@ -1,6 +1,7 @@
 package io.cloudsoft.basho;
 
 import brooklyn.entity.Entity;
+import brooklyn.entity.basic.Attributes;
 import brooklyn.entity.basic.EntityPredicates;
 import brooklyn.entity.group.AbstractMembershipTrackingPolicy;
 import brooklyn.entity.group.DynamicFabricImpl;
@@ -12,6 +13,7 @@ import brooklyn.policy.PolicySpec;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
@@ -38,8 +40,9 @@ public class RiakEnterpriseFabricImpl extends DynamicFabricImpl implements RiakE
     public void init() {
         super.init();
         addPolicy(PolicySpec.create(MembershipTrackingPolicy.class)
-            .displayName("Riak Fabric Tracker")
-            .configure("group", this));
+                .displayName("Riak Fabric Tracker")
+                .configure("sensorsToTrack", ImmutableSet.of(RiakEnterpriseCluster.REPLICATION_INITIALIZED))
+                .configure("group", this));
     }
 
     public static class MembershipTrackingPolicy extends AbstractMembershipTrackingPolicy {
@@ -118,7 +121,7 @@ public class RiakEnterpriseFabricImpl extends DynamicFabricImpl implements RiakE
 
     private void update() {
         synchronized (mutex) {
-            Iterable<Entity> upEntities = Iterables.filter(getMembers(), EntityPredicates.attributeEqualTo(SERVICE_UP, Boolean.TRUE));
+            Iterable<Entity> upEntities = Iterables.filter(getMembers(), EntityPredicates.attributeEqualTo(RiakEnterpriseCluster.REPLICATION_INITIALIZED, Boolean.TRUE));
             Set<RiakEnterpriseCluster> upClusters = Sets.newLinkedHashSet(Iterables.transform(upEntities, new Function<Entity, RiakEnterpriseCluster>() {
                 @Nullable
                 @Override
