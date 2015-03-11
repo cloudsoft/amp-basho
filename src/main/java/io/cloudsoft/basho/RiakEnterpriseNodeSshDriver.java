@@ -4,7 +4,6 @@ import brooklyn.entity.Entity;
 import brooklyn.entity.basic.Attributes;
 import brooklyn.entity.basic.EntityPredicates;
 import brooklyn.entity.basic.lifecycle.ScriptHelper;
-import brooklyn.entity.nosql.riak.RiakCluster;
 import brooklyn.entity.nosql.riak.RiakNodeImpl;
 import brooklyn.entity.nosql.riak.RiakNodeSshDriver;
 import brooklyn.entity.software.SshEffectorTasks;
@@ -75,6 +74,6 @@ public class RiakEnterpriseNodeSshDriver extends RiakNodeSshDriver implements Ri
     }
 
     private String getRiakReplCommand() {
-        return isPackageInstall() ? "riak-repl" : Urls.mergePaths(getExpandedInstallDir(), "bin/riak-repl");
+        return "riak-repl";
     }
 }
