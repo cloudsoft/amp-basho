@@ -62,19 +62,23 @@ services:
 ## cluster RiakEE w MDC between SL+AWS + webapp
 
 ```yaml
-name: cluster RiakEE w MDC between SL+AWS + webapp
-location:
-  multi:
-    targets:
-    - SoftlayerAmsterdam
-    - aws-centos5_9
+name: Riak Fabric
+locations: [softlayer:ams01, softlayer:lon02]
 services:
-- type: io.cloudsoft.basho.RiakEnterpriseCluster
-  initialSize: 3
-  id: cluster
+- type: io.cloudsoft.basho.RiakEnterpriseFabric
   brooklyn.config:
-    download.url.rhelcentos: http://riak_official/riak_rhel5.rpm
-    download.url.ubuntu: http://riak_official/ubuntu10.rpm
+    cluster.initial.size: 3
+    download.url.rhelcentos: http://official_url/riak_ee.rpm
+    provisioning.properties:
+      osFamily: centos
+      minCores: 2
+      minRam: 2000
+- type: brooklyn.entity.webapp.jboss.JBoss7Server
+  name: Web
+  brooklyn.config:
+    wars.root: "https://s3-eu-west-1.amazonaws.com/brooklyn-clocker/brooklyn-example-hello-world-sql-webapp.war"
+    java.sysprops:
+      brooklyn.example.riak.nodes: $brooklyn:component("cluster").attributeWhenReady("riak.cluster.nodeList")
 - type: brooklyn.entity.webapp.jboss.JBoss7Server
   name: Web
   brooklyn.config:
