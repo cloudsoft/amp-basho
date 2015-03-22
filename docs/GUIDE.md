@@ -57,22 +57,54 @@ Expand to Riak Node level
 Go to Effectors tab
 Here you can expand to the MDC cluster and the cluster itself and you can manage the nodes in the different levels
 
-**RiakEnterpriseFabric**
+### RiakEnterpriseFabric
+
 ![RiakEnterpriseFabric](https://raw.githubusercontent.com/cloudsoft/amp-basho/demo-documentation/docs/images/riak_enterprise_mdc.png?token=ABhWrk-nmVHq_1D5XKhnfaCLZGvWMhggks5VF_BhwA%3D%3D)
 
-**RiakEnterpriseCluster**
+The list of effectors you can invoke:
+
+- **restart**	Restart the process/service represented by an entity
+- **start**	Start the process/service represented by an entity
+- **stop**	Stop the process/service represented by an entity
+
+---------------------------------------
+
+<br>
+
+### RiakEnterpriseCluster
+
 ![RiakEnterpriseCluster](https://raw.githubusercontent.com/cloudsoft/amp-basho/demo-documentation/docs/images/riak_ee_cluster_level.png?token=ABhWrpwcuDx43MiPoKCnqx1-mM7_O9liks5VF_BMwA%3D%3D)
 
-**RiakEnterpriseNode**
+The list of effectors you can invoke:
+
+- **replaceMember**	Replaces the entity with the given ID, if it is a member; first adds a new member, then removes this one. Returns id of the new entity; or throws exception if couldn't be replaced.
+- **resize**	Changes the size of the entity (e.g. the number of nodes in a cluster)
+- **resizeByDelta**	Changes the size of the cluster.
+- **restart**	Restart the process/service represented by an entity
+- **start**	Start the process/service represented by an entity
+- **stop**	Stop the process/service represented by an entity
+
+---------------------------------------
+
+<br>
+
+### RiakEnterpriseNode
+
 ![RiakEnterpriseNode](https://raw.githubusercontent.com/cloudsoft/amp-basho/demo-documentation/docs/images/riak_ee_node_level.png?token=ABhWrqkbs2_k6TVk-W5RjSzfAzDrd7Auks5VF_A9wA%3D%3D)
 
-Node actions
-* start node
-* stop node
-* restart node
-* joinCluster
-* leaveCluster
+The list of effectors you can invoke:
 
+- **commitCluster**	Commit changes made to a Riak cluster	Invoke
+- **joinCluster**	Add this riak node to the Riak cluster	Invoke
+- **leaveCluster**	Remove this Riak node from the cluster	Invoke
+- **recoverFailedNode**	Recover a failed Riak node and join it back to the cluster (by passing it a working node on the cluster 'node')	Invoke
+- **restart**	Restart the process/service represented by an entity	Invoke
+- **start**	Start the process/service represented by an entity	Invoke
+- **stop**	Stop the process/service represented by an entity
+
+---------------------------------------
+
+<br>
 
 ## Sensors
 
