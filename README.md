@@ -6,7 +6,19 @@ which Brooklyn will deploy and manage.
 
 This sample project is intended to be customized to suit your purposes: but
 search for all lines containing the word "sample" to make sure all the
-references to this being a sample are removed!   
+references to this being a sample are removed!
+
+Installation
+===
+
+To compile it with the latest version of brooklyn:
+```bash
+git clone git@github.com:apache/incubator-brooklyn.git
+cd incubator-brooklyn
+mvn clean install
+```
+
+## Then you can install amp-basho:
 
 To build an assembly, simply run:
 
@@ -27,6 +39,7 @@ password-less (and passphrase-less) ssh enabled.
 To configure cloud and fixed-IP locations, see the README file in the built application directly.
 For more information you can run `./start.sh help`) in that directory.
 
+For more detailed usage on how to use brooklyn. Visit docs/GUIDE.md
 
 ### Opening in an IDE
 

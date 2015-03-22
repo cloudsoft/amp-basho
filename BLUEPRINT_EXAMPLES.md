@@ -19,6 +19,7 @@ brooklyn.location.named.SoftlayerAmsterdam=jclouds:softlayer
 brooklyn.location.named.SoftlayerAmsterdam.region=ams01
 brooklyn.location.named.SoftlayerAmsterdam.osFamily=CentOS
 ```
+[more information about locations](https://brooklyn.incubator.apache.org/v/latest/ops/locations/)
 
 ## single-node riak in AWS
 
