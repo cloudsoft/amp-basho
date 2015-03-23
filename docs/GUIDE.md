@@ -44,10 +44,33 @@ MDC v3: Connect
 MDC v3: Realtime: Enable/Disable, Start/Stop
 MDC v3: Full Sync: Enable/Disable, Start/Stop, Configure Scheduling
 
-Parameters
+# Writing a blueprint
+
+## Parameters
+
+You can tune brooklyn with various parameters like this in the yaml
+
+<pre>
+services:
+- type: io.cloudsoft.basho.RiakEnterpriseFabric
+  brooklyn.config:
+    install.version: 2.0.5
+    riak.advancedConfig.templateUrl: http://
+</pre>
+
+List of all the config keys available
+- **riak.advancedConfig.templateUrl**: *Template file (in freemarker format) for the advanced.config file*
+
 install.version: 2.0.5
 clusterName
 advanced.config: config-url
+
+
+Here are all the config parameters for:
+
+* [RiakNode](RiakNode-config.md)
+* [RiakCluster](RiakCluster-config.md)
+
 
 # Managing the server
 
@@ -108,5 +131,4 @@ The list of effectors you can invoke:
 
 ## Sensors
 
-host name
-ip address
+![RiakEnterpriseNode](https://raw.githubusercontent.com/cloudsoft/amp-basho/demo-documentation/docs/images/riak_ee_node_sensors.png?token=ABhWrp1ninNjWMKZFaRFBOdZAa0ez5_Mks5VGOilwA%3D%3D)
