@@ -377,3 +377,23 @@
 *description* Mapping of templates, to be filled in and copied before customisation, to destination name relative to runDir<br>
 *value type* java.util.Map<br>
 *default value* &nbsp;
+
+<br>
+
+## RiakEnterpriseNode
+
+The properties bellow are only available in the amp-basho (the enterprise brooklyn module for riak)
+
+#### riak.replication.cluster.manager.port
+
+*description* Cluster Manager Port<br>
+*value type* PortRange<br>
+*default value* 9080+
+
+<br>
+
+### riak.advancedConfig.templateUrl
+
+*description* Template file (in freemarker format) for the advanced.config file
+*value type* String
+*default value* classpath://advanced.config

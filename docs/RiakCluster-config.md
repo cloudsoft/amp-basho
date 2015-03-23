@@ -136,3 +136,26 @@
 *value type* brooklyn.util.time.Duration <br>
 *default value* 2m <br>
 
+## RiakEnterpriseNode
+
+The properties bellow are only available in the amp-basho (the enterprise brooklyn module for riak)
+
+### riak.cluster.clusterName
+
+*description* Unique name of the cluster, used in multi-datacenter replication<br>
+*value type* String<br>
+*default value* 
+
+<br>
+
+<!--
+### 
+
+*description* 
+*value type* 
+*default value* 
+
+<br>
+-->
+
+
