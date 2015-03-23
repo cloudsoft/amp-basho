@@ -1,4 +1,4 @@
-Copyright &copy; 2014 Cloudsoft Corporation Limited
+Copyright &copy; 2015 Cloudsoft Corporation Limited
 
 Licensed under the Cloudsoft EULA v1.0 (the "License");
 you may not use this file except in compliance with the License.
