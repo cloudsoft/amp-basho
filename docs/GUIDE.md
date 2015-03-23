@@ -12,6 +12,8 @@ the default locations in http://docs.basho.com/riak/latest/downloads/
 The difference between the standard Riak blueprint is that you have to specify urls for the Riak EE package.
 Example:
 ```yaml
+name: Riak Node
+location: softlayer:ams01
 services:
 - type: io.cloudsoft.basho.RiakEnterpriseNode
   brooklyn.config:
@@ -48,22 +50,24 @@ MDC v3: Full Sync: Enable/Disable, Start/Stop, Configure Scheduling
 
 ## Parameters
 
-You can tune brooklyn with various parameters like this in the yaml
+You can tune the service by assigning different parameters to brooklyn.config
 
-<pre>
+```yaml
+name: Riak MDC
+locations: [softlayer:ams01, softlayer:lon02]
 services:
 - type: io.cloudsoft.basho.RiakEnterpriseFabric
   brooklyn.config:
     install.version: 2.0.5
     riak.advancedConfig.templateUrl: http://
-</pre>
+```
 
-List of all the config keys available
+Some of the config keys available:
+
 - **riak.advancedConfig.templateUrl**: *Template file (in freemarker format) for the advanced.config file*
-
-install.version: 2.0.5
-clusterName
-advanced.config: config-url
+- **install.version**: *2.0.5*
+- **clusterName**
+- **advanced.config**: *config-url*
 
 
 Here are all the config parameters for:
