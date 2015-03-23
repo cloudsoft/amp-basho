@@ -1,3 +1,6 @@
+---
+---
+
 # RiakCluster config keys
 
 <br>

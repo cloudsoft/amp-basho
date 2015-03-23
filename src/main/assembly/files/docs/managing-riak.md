@@ -1,3 +1,6 @@
+---
+---
+
 # Getting Started with Riak
 
 After you have brooklyn installed. You can start defining your Riak Setup in the [brooklyn web console](http://localhost:8081)

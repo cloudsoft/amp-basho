@@ -1,94 +1,50 @@
-amp-basho
+---
+---
+
+AMP-Basho
 ===
 
-This is a Sample Brooklyn project, showing how to define an application
-which Brooklyn will deploy and manage.
+The **AMP-Basho** software will automatically deploy and manage 
+Basho Riak and Riak Enterprise clusters in a wide range of environments.
+This uses [Apache Brooklyn](http://brooklyn.io)'s easy-to-use YAML blueprinting approach,
+combined with [Cloudsoft](http://cloudsoftcorp.com)'s enterprise-supported 
+Application Management Platform (AMP).
 
-This sample project is intended to be customized to suit your purposes: but
-search for all lines containing the word "sample" to make sure all the
-references to this being a sample are removed!
+These instructions cover how to build the project.
 
-Installation
-===
+For instructions on running -- deploying Riak EE blueprints -- see [the distro's README](src/main/assembly/files/README.md).
 
-To compile it with the latest version of brooklyn:
-```bash
-git clone git@github.com:apache/incubator-brooklyn.git
-cd incubator-brooklyn
-mvn clean install
-```
 
-## Then you can install amp-basho:
+Building this Project
+---
 
-To build an assembly, simply run:
+To build this project, with Java 7 and Maven 3 installed, simply run:
 
-    mvn clean assembly:assembly
+    mvn clean install assembly:single
+    
+This will build and install a `...-dist.tar.gz` in `target/` which can be redistributed, 
+expanded, and run anywhere where Java is installed to run AMP-Basho.
 
-This creates a tarball with a full standalone application which can be installed in any *nix machine at:
-    target/amp-basho-0.1.0-SNAPSHOT-dist.tar.gz
-
-It also installs an unpacked version which you can run locally:
+Instructions on running are included in the README in that tarball.
  
-     cd target/amp-basho-0.1.0-SNAPSHOT-dist/amp-basho-0.1.0-SNAPSHOT
-     ./start.sh server
- 
-For more information see the README (or `./start.sh help`) in that directory.
-On OS X and Linux, this application will deploy to localhost *if* you have key-based 
-password-less (and passphrase-less) ssh enabled.
-
-To configure cloud and fixed-IP locations, see the README file in the built application directly.
-For more information you can run `./start.sh help`) in that directory.
-
-For more detailed usage on how to use brooklyn. Visit docs/GUIDE.md
-
-### Opening in an IDE
-
-To open this project in an IDE, you will need maven support enabled
-(e.g. with the relevant plugin).  You should then be able to develop
-it and run it as usual.  For more information on IDE support, visit:
-
-    http://brooklyncentral.github.io/dev/build/ide.html
 
 
-### Customizing the Assembly
+Other Ways of Running
+---
 
-The artifacts (directory and tar.gz by default) which get built into
-`target/` can be changed.  Simply edit the relevant files under
-`src/main/assembly`.
+TODO: other ways of running:
 
-You will likely wish to customize the `SampleMain` class as well as
-the `Sample*App` classes provided.  That is the intention!
-You will also likely want to update the `start.sh` script and
-the `README.*` files.
+* OSGi (WIP)
+* dropins JAR
 
-To easily find the bits you should customize, do a:
-
-    grep -ri sample src/ *.*
+in deployment topologies:  this project can supply a custom GUI, suitable for a team to manage their deployments, including debugging,
+or a custom GUI can be stood up in front of this consuming the REST API, suitable for a simplified multi-tenant front-end.
 
 
-### More About Brooklyn
+License
+---
 
-Brooklyn is a code library and framework for managing applications in a 
-cloud-first dev-ops-y way.  It has been used to create this sample project 
-which shows how to define an application and entities for Brooklyn.
+AMP-Basho is built on [Cloudsoft AMP](http://www.cloudsoftcorp.com) and [Apache Brooklyn](http://brooklyn.io)
+and is copyright &copy; 2015 by Cloudsoft Corporation and Basho.
 
-This project can be extended for more complex topologies and more 
-interesting applications, and to develop the policies to scale or tune the 
-deployment depending on what the application needs.
-
-For more information consider:
-
-* Visiting the open-source Brooklyn home page at  http://brooklyncentral.github.com
-* Forking the Brooklyn project at  http://github.com/brooklyncentral/brooklyn
-* Emailing  brooklyn-users@googlegroups.com 
-
-For commercial enquiries -- including bespoke development and paid support --
-contact Cloudsoft, the supporters of Brooklyn, at:
-
-* www.CloudsoftCorp.com
-* info@cloudsoftcorp.com
-
-Brooklyn is (c) 2014 Cloudsoft Corporation and released as open source under 
-the Apache License v2.0.
-
-A sample Brooklyn project should specify its license.
+This software is released under the terms of [the Cloudsoft EULA](LICENSE.md).
