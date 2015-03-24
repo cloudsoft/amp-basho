@@ -1,0 +1,66 @@
+
+body {
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;;
+  font-weight: 300;
+  margin: 0;
+}
+
+.header-text {
+  font-size: 200%;
+  font-weight: 800;
+  margin-top: 16px;
+}
+
+.basho-logo {
+  background: url("images/basho.png") top left no-repeat !important;
+  background-size: 120px 40px !important;
+  height: 40px;
+  width: 120px;
+  margin-top: 10px;
+  padding-bottom: 4px;
+}
+.cloudsoft-logo {
+  background: url("images/cloudsoft-amp.png") top left no-repeat !important;
+  background-size: 136px 40px !important;
+  height: 40px;
+  width: 136px;
+  margin-top: 10px;
+}
+.github-logo {
+  background: url("images/github-256-white.png") top left no-repeat !important;
+  background-size: 48px 48px !important;
+  height: 48px;
+  width: 48px;
+  margin-top: 2px;
+}
+
+.header {
+  background-color: black;
+  color: white;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.header-content {
+  margin: auto; 
+  width: 768px;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.inline-block {
+  display: inline-block;
+}
+
+.main-content {
+  margin: auto;
+  margin-top: 105px; 
+  margin-bottom: 75px; 
+  width: 768px;
+}

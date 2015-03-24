@@ -145,7 +145,7 @@ AMP-Basho is built on [Cloudsoft AMP](http://www.cloudsoftcorp.com) and [Apache 
 and is copyright &copy; 2015 by Cloudsoft Corporation and Basho.
 
 License for AMP-Basho is hereby granted for non-commercial and evaluation purposes 
-under the terms of [the Cloudsoft EULA](LICENSE.md).
+under the terms of [the Cloudsoft EULA](LICENSE.txt).
 For a commercial license please contact your Basho representative. 
 
 The open-source Riak components used here are included in core [Apache Brooklyn](http://brooklyn.io).

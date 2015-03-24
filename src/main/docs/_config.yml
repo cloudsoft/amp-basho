@@ -1,0 +1,12 @@
+
+markdown: redcarpet
+encoding: utf-8
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: basho
+
+exclude: ['/Gemfile*']

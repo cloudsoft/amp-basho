@@ -12,7 +12,7 @@ Application Management Platform (AMP).
 
 These instructions cover how to build the project.
 
-For instructions on running -- deploying Riak EE blueprints -- see [the distro's README](src/main/assembly/files/README.md).
+For instructions on running -- deploying Riak EE blueprints -- see [the distro's README](src/main/docs/README.md).
 
 
 Building this Project
@@ -33,9 +33,9 @@ Release Build
 
 For a release build, we want to include Cloudsoft AMP instead of Apache Brooklyn
 and ensure the latest version of the docs are built.  To do this
-you will require jekyll setup (see []) and a local maven install of Cloudsoft AMP:
+you will require jekyll setup (as described [here](https://github.com/apache/incubator-brooklyn/blob/master/docs/README.md)) and a local maven install of Cloudsoft AMP:
 
-    # TODO - build docs
+    pushd src/main/docs ; rm -rf _site ; jekyll build ; popd
     mvn clean install assembly:single -Pamp
 
 
@@ -64,4 +64,4 @@ License
 AMP-Basho is built on [Cloudsoft AMP](http://www.cloudsoftcorp.com) and [Apache Brooklyn](http://brooklyn.io)
 and is copyright &copy; 2015 by Cloudsoft Corporation and Basho.
 
-This software is released under the terms of [the Cloudsoft EULA](LICENSE.md).
+This software is released under the terms of [the Cloudsoft EULA](LICENSE.txt).
