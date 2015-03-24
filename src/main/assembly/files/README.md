@@ -24,6 +24,7 @@ Once the distro is unpacked, run:
     ./start.sh launch 
 
 To launch the simplest Riak Enterprise three-node cluster blueprint, 
+open the AMP-Basho / Brooklyn console (usually on [http://localhost:8081](http://localhost:8081)] and
 paste the following YAML in to the **Add Application -> YAML** dialog:
 
 ```
@@ -40,7 +41,7 @@ location:
 services:
 - type: io.cloudsoft.basho.RiakEnterpriseCluster
   initialSize: 3
-  download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/XXXXXX/2.0/2.0.5/rhel/7/riak-ee-2.0.5-1.el7.centos.x86_64.rpm
+  download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/7/riak-ee-2.0.5-1.el7.centos.x86_64.rpm
 ```
 
 Replace `YOUR_CENTOS_DOWNLOAD` with the URL supplied by Basho, in this case for CentOS 7,
@@ -51,12 +52,29 @@ For more information on configuring locations,
 see the [Locations](https://brooklyn.incubator.apache.org/v/latest/ops/locations/index.html)
 page in the [Brooklyn Users Guide](https://brooklyn.incubator.apache.org/v/latest/index.html).
 
-**Don't have a Riak Enterprise download?**  Open-source Riak is supported by blueprints
-from [Apache Brooklyn](http://brooklyn.io) which are included in this project.
-See TODO for more information. These blueprints can be deployed in AMP-Basho.
+**Don't have a Riak Enterprise download?**  [Open-source Riak](http://docs.basho.com/riak/latest/) 
+is supported by blueprints from [Apache Brooklyn](http://brooklyn.io) which are included in this project.
+See [the Brooklyn Riak page](https://github.com/apache/incubator-brooklyn/blob/master/software/nosql/src/main/resources/brooklyn/entity/nosql/riak/riak.md) 
+for more information. These blueprints can be deployed in AMP-Basho.
 
-**Prefer a different OS?**  Other `osFamily` and `download.url.xxx` combinations
+**Prefer a different OS?**  Other `osFamily`, `osVersionRegex` and `download.url....` combinations
 are supported. See [here](docs/RiakNode-config.md) for more information. 
+
+You can then follow the progress of the deployment in the AMP-Basho console by clicking on the
+**Applications** tab and expanding the application nodes.  Once the system is live,
+the **Sensors** tab will show stats from each node and the URL for the Riak console.
+The **Effectors** tab gives you
+runtime control of individual nodes and of the cluster, including the capability to 
+resize a cluster (adding and removing nodes according to the 
+[Riak best practice instructions](http://docs.basho.com/riak/latest/ops/running/nodes/adding-removing/))
+and recover failed nodes.  
+
+![Effectors](docs/images/riak_ee_node_level_small.png)
+
+More information on managing your Riak cluster with AMP-Basho is 
+[here](docs/managing-riak.md).
+For more information on using Apache Brooklyn,
+on which AMP-Basho is based, visit [http://brooklyn.io](http://brooklyn.io).
 
 
 Runtime Options
@@ -85,78 +103,19 @@ set up the following as you would like, and relaunch:
   and for more complex persistence and HA strategies [consult this page](https://brooklyn.incubator.apache.org/v/latest/ops/persistence/index.html)
 
 
-A Bigger Example: MDC + Web App
+More Examples
 ---
 
-Here is an example of a much more interesting configuration, showing:
+After your AMP-Basho install is configured, you'll likely want to 
+deploy the right topology for your Riak installations and other software.
+These examples will help you on your way:
 
-* Running multiple Riak EE clusters in multiple locations
-* Including one location which is a set of pre-existing hosts referenced by their IP addresses
-* Setting up an elastic Chat web app configured with a Riak back-end
-* Attaching a scaling policy to the web tier -- and with suitable configuration this same
-  policy can be attached to Riak clusters
-
-```
-name: Web App with Riak Fabric
-
-services:
-
-# deploy a Riak Fabric running in multiple locations
-- type: io.cloudsoft.basho.RiakEnterpriseFabric
-  name: Riak Fabric (multiple locations)
-  id: riak-fabric
-  brooklyn.config:
-    cluster.initial.size: 3
-    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/XXXXXX/2.0/2.0.5/rhel/7/riak-ee-2.0.5-1.el7.centos.x86_64.rpm
-    provisioning.properties:
-      osFamily: centos
-      osVersionRegex: 7\..*
-      minCores: 4
-      minRam: 8gb
-      
-  locations:
-  # locations can also be specified per-service; our fabric will be in 3 geographies 
-  - jclouds:aws-ec2:us-west-1:
-      identity: YOUR_AWS_IDENTITY
-      credential: YOUR_AWS_CREDENTIAL
-  - jclouds:softlayer:ams01:
-      identity: YOUR_SL_IDENTITY
-      credential: YOUR_SL_CREDENTIAL
-  - byon:
-      # this syntax will install to a set of existing machines:
-      # if user and privateKeyFile are left blank, it will use the localhost's
-      user: YOUR_HOSTS_USERNAME
-      privateKeyFile: ~/.ssh/YOUR_HOSTS_KEY
-      hosts:
-      - 192.168.0.15
-      - 192.168.0.16
-      - 192.168.0.17
-      - 192.168.0.18
-      
-# we'll also deploy a web-app with an auto-scaler policy
-- type: brooklyn.entity.webapp.ControlledDynamicWebAppCluster
-  name: Web Cluster
-  brooklyn.config:
-    wars.root: https://s3-eu-west-1.amazonaws.com/brooklyn-clocker/brooklyn-example-hello-world-sql-webapp.war
-    java.sysprops: 
-      brooklyn.example.riak.nodes: $brooklyn:component("riak-fabric").attributeWhenReady("riak.cluster.nodeList")
-      
-  brooklyn.policies:
-  - policyType: brooklyn.policy.autoscaling.AutoScalerPolicy
-    brooklyn.config:
-      metric: $brooklyn:sensor("brooklyn.entity.webapp.DynamicWebAppCluster", "webapp.reqs.perSec.windowed.perNode")
-      metricLowerBound: 10
-      metricUpperBound: 100
-      minPoolSize: 1
-      maxPoolSize: 5
-      
-  location:
-  # our web app is just in CA
-  - jclouds:aws-ec2:us-west-1:
-      identity: YOUR_AWS_IDENTITY
-      credential: YOUR_AWS_CREDENTIAL
-```
-
+* **[Web App with Riak Cluster](docs/example-with-webapp.md)** 
+  shows how to stand up a cluster alongside other components
+  
+* **[Riak Multi-Datacenter and Web App with Policy](docs/example-behemoth.md)**
+  shows how to set up an MDC configuration in several clouds and fixed IP machines,
+  together with a web cluster with an attached scaling policy
 
 
 Next Steps
@@ -164,13 +123,16 @@ Next Steps
 
 For more information on managing Basho Riak from AMP-Basho, see these mini-guides:
 
-* [Managing Riak from AMP-Basho](docs/managing-riak.md)
+* **Configuration**: AMP-Basho supports many of the [configuration options](http://docs.basho.com/riak/latest/ops/building/configuration/)
+  exposed by Riak. 
+  There are full references for the Brooklyn config keys
+  available on [the Riak Node](docs/RiakNode-config.md) and on the [Riak Cluster](docs/RiakCluster-config.md).
 
-* Brooklyn Riak Entities Configuration Reference
-  * [Riak Node Config Keys](docs/RiakNode-config.md)
-  * [Riak Cluster Config Keys](docs/RiakCluster-config.md)
-  
-For more information on working with Apache Brooklyn blueprints,
+* **Operations**: Many of the Riak management operations and monitoring ([see Riak doc](http://docs.basho.com/riak/latest/)) 
+  are supported by effectors and sensors in AMP-Basho.
+  For more information, see [Managing Riak from AMP-Basho](docs/managing-riak.md).
+
+To learn more about working with Apache Brooklyn blueprints,
 the [Brooklyn Blueprint Tour](https://brooklyn.incubator.apache.org/learnmore/blueprint-tour.html) 
 is a good starting point.
 
