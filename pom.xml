@@ -9,7 +9,7 @@
 
     <name>AMP Basho</name>
     <description>
-        This project adds AMP / Brooklyn support for Basho Enterprise
+        This project provides AMP / Brooklyn support for Basho Enterprise
     </description>
 
     <parent>
@@ -24,15 +24,20 @@
         <bundle.version>2.3.7</bundle.version>
         <jar.version>2.4</jar.version>
         <compiler.version>3.1</compiler.version>
+        <amp.version>2.0.0-SNAPSHOT</amp.version>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.brooklyn</groupId>
-            <artifactId>brooklyn-all</artifactId>
-            <version>${brooklyn.version}</version>
-        </dependency>
+  <repositories>
+    <repository>
+        <id>apache-nexus-snapshots</id>
+        <name>Apache Nexus Snapshots</name>
+        <url>https://repository.apache.org/content/repositories/snapshots</url>
+        <releases> <enabled>false</enabled> </releases>
+        <snapshots> <enabled>true</enabled> </snapshots>
+    </repository>
+  </repositories>
 
+    <dependencies>
         <dependency>
             <groupId>org.apache.brooklyn</groupId>
             <artifactId>brooklyn-test-support</artifactId>
@@ -73,7 +78,7 @@
                     <descriptors>
                         <descriptor>src/main/assembly/assembly.xml</descriptor>
                     </descriptors>
-                    <finalName>amp-basho</finalName>
+                    <finalName>amp-basho-${project.version}</finalName>
                 </configuration>
                 <executions>
                     <execution>
@@ -125,5 +130,83 @@
             </plugin>
         </plugins>
     </build>
+
+  <profiles>
+    <profile>
+      <!-- amp profile builds with Cloudsoft AMP instead of Apache Brooklyn -->
+      <id>amp</id>
+      <dependencies>
+        <dependency>
+          <groupId>io.cloudsoft.amp</groupId>
+          <artifactId>amp-all</artifactId>
+          <version>${amp.version}</version>
+          <exclusions>
+            <exclusion>
+              <groupId>org.apache.brooklyn</groupId>
+              <artifactId>brooklyn-launcher</artifactId>
+            </exclusion>
+            <exclusion>
+              <groupId>io.cloudsoft.amp</groupId>
+              <artifactId>amp-cloud-trial</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+    
+        <dependency>
+          <groupId>org.apache.brooklyn</groupId>
+          <artifactId>brooklyn-launcher</artifactId>
+          <classifier>no-jsgui</classifier>
+          <version>${brooklyn.version}</version>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <!-- copy WAR file so we can embed and access it;
+                         previously (in git history) we *replaced* brooklyn.war,
+                         while that's cool, it seems unfortunate to have to do that -->
+                    <execution>
+                        <id>copy</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>io.cloudsoft.amp</groupId>
+                                    <artifactId>amp-jsgui</artifactId>
+                                    <version>${amp.version}</version>
+                                    <type>war</type>
+                                    <outputDirectory>target/classes</outputDirectory>
+                                    <destFileName>brooklyn.war</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+      </build>
+    </profile>
+    
+    <profile>
+      <!-- brooklyn profile builds with Apache Brooklyn (not Cloudsoft AMP) -->
+      <id>brooklyn</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <dependencies>
+        <dependency>
+            <groupId>org.apache.brooklyn</groupId>
+            <artifactId>brooklyn-all</artifactId>
+            <version>${brooklyn.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+
 </project>
 

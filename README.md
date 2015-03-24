@@ -26,19 +26,36 @@ This will build and install a `...-dist.tar.gz` in `target/` which can be redist
 expanded, and run anywhere where Java is installed to run AMP-Basho.
 
 Instructions on running are included in the README in that tarball.
- 
+
+
+Release Build
+---
+
+For a release build, we want to include Cloudsoft AMP instead of Apache Brooklyn
+and ensure the latest version of the docs are built.  To do this
+you will require jekyll setup (see []) and a local maven install of Cloudsoft AMP:
+
+    # TODO - build docs
+    mvn clean install assembly:single -Pamp
 
 
 Other Ways of Running
 ---
 
-TODO: other ways of running:
+There are other ways of running this as well:
 
-* OSGi (WIP)
-* dropins JAR
+* **Dropins JAR**: The JAR which is built can be added to the `dropins` directory in Apache Brooklyn or Cloudsoft AMP,
+  using the standard distributions of those software instead of the redistributable build here.
+  This is advantageous when combining with other Java blueprints, including [Clocker](http://clocker.io).
 
-in deployment topologies:  this project can supply a custom GUI, suitable for a team to manage their deployments, including debugging,
-or a custom GUI can be stood up in front of this consuming the REST API, suitable for a simplified multi-tenant front-end.
+* **OSGi**: The JAR which is built is an OSGi bundle; this can be referenced in YAML blueprints 
+  added to the Brooklyn catalog in the usual Brooklyn way. And advantage of the OSGi approach
+  is that new versions can be added dynamically with multiple versions run concurrently.
+
+It is also an option to include a custom GUI with this project, 
+suitable for a team to manage their deployments, including debugging,
+or to stand up a custom GUI in front of this, consuming the REST API, 
+suitable for a simplified multi-tenant front-end (a.k.a. an *easy deployment tool*).
 
 
 License
