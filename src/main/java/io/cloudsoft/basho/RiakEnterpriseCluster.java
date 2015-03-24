@@ -1,5 +1,6 @@
 package io.cloudsoft.basho;
 
+import brooklyn.entity.annotation.Effector;
 import brooklyn.entity.nosql.riak.RiakCluster;
 import brooklyn.entity.proxying.ImplementedBy;
 import brooklyn.event.AttributeSensor;
@@ -23,4 +24,7 @@ public interface RiakEnterpriseCluster extends RiakCluster {
         "riak.cluster.replication.sinks", "Set of RiakEnterpriseClusters currently acting as replication sinks to this cluster");
 
     void updateReplication(Set<RiakEnterpriseCluster> upClusters);
+
+    @Effector(description="Manually initiates a fullsync operation with connected sites.")
+    void triggerFullSync();
 }

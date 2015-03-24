@@ -45,4 +45,9 @@ public class RiakEnterpriseNodeImpl extends RiakNodeImpl implements RiakEnterpri
    public Integer getRiakClusterManagerPort() {
       return getAttribute(CLUSTER_MANAGER_PORT);
    }
+
+   @Override
+   public void triggerFullSync() {
+       getDriver().triggerFullSync();
+   }
 }

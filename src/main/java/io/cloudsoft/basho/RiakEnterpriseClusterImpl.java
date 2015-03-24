@@ -46,6 +46,16 @@ public class RiakEnterpriseClusterImpl extends RiakClusterImpl implements RiakEn
         setAttribute(REPLICATION_SINKS, sinks);
     }
 
+    @Override
+    public void triggerFullSync() {
+        Optional<RiakEnterpriseNode> anyNode = getAnyNode();
+        if (!anyNode.isPresent()) {
+            throw new IllegalStateException("Cannot initialize replication sinks as there are no nodes available");
+        }
+
+        anyNode.get().triggerFullSync();
+    }
+
     protected EntitySpec<?> getMemberSpec() {
         return getConfig(MEMBER_SPEC, EntitySpec.create(RiakEnterpriseNode.class));
     }

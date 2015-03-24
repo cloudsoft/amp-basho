@@ -17,6 +17,8 @@ public interface RiakEnterpriseNode extends RiakNode {
 
     void initializeReplication(String name);
 
+    void triggerFullSync();
+
     void addReplicationSink(RiakEnterpriseCluster upCluster);
 
     Integer getRiakClusterManagerPort();

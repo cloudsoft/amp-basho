@@ -6,4 +6,6 @@ public interface RiakEnterpriseNodeDriver extends RiakNodeDriver {
     void initializeCluster(String name);
 
     void addReplicationSink(RiakEnterpriseCluster upCluster);
+
+    void triggerFullSync();
 }
