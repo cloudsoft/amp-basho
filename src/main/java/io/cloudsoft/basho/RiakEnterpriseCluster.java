@@ -1,6 +1,7 @@
 package io.cloudsoft.basho;
 
 import brooklyn.entity.annotation.Effector;
+import brooklyn.entity.annotation.EffectorParam;
 import brooklyn.entity.nosql.riak.RiakCluster;
 import brooklyn.entity.proxying.ImplementedBy;
 import brooklyn.event.AttributeSensor;
@@ -26,5 +27,5 @@ public interface RiakEnterpriseCluster extends RiakCluster {
     void updateReplication(Set<RiakEnterpriseCluster> upClusters);
 
     @Effector(description="Manually initiates a fullsync operation with connected sites.")
-    void triggerFullSync();
+    void triggerFullSync(@EffectorParam(name = "clusterSink", description = "cluster to make sync with") String clusterName);
 }

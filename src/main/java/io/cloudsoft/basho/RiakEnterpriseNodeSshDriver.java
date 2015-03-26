@@ -73,9 +73,11 @@ public class RiakEnterpriseNodeSshDriver extends RiakNodeSshDriver implements Ri
         addSink.execute();
     }
 
-    public void triggerFullSync() {
+    @Override
+    public void triggerFullSync(String clusterName) {
         List<String> commands = ImmutableList.<String>builder()
-                .add(sudo(format("%s start-fullsync", getRiakReplCommand())))
+                .add(sudo(format("%s fullsync enable %s", getRiakReplCommand(), clusterName)))
+                .add(sudo(format("%s fullsync start %s", getRiakReplCommand(), clusterName)))
                 .build();
         newScript("triggerFullSync")
                 .body.append(commands)

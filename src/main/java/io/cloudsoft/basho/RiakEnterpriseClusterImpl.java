@@ -47,13 +47,13 @@ public class RiakEnterpriseClusterImpl extends RiakClusterImpl implements RiakEn
     }
 
     @Override
-    public void triggerFullSync() {
+    public void triggerFullSync(String clusterName) {
         Optional<RiakEnterpriseNode> anyNode = getAnyNode();
         if (!anyNode.isPresent()) {
             throw new IllegalStateException("Cannot initialize replication sinks as there are no nodes available");
         }
 
-        anyNode.get().triggerFullSync();
+        anyNode.get().triggerFullSync(clusterName);
     }
 
     protected EntitySpec<?> getMemberSpec() {

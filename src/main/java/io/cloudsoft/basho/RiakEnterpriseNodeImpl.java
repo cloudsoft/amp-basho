@@ -47,7 +47,7 @@ public class RiakEnterpriseNodeImpl extends RiakNodeImpl implements RiakEnterpri
    }
 
    @Override
-   public void triggerFullSync() {
-       getDriver().triggerFullSync();
+   public void triggerFullSync(String clusterName) {
+       getDriver().triggerFullSync(clusterName);
    }
 }
