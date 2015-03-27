@@ -400,3 +400,11 @@ The properties bellow are only available in the amp-basho (the enterprise brookl
 *description* Template file (in freemarker format) for the advanced.config file
 *value type* String
 *default value* classpath://advanced.config
+
+<br>
+
+### riak.additionalConfig.file
+
+*description* Template file (in freemarker format) for setting up additional settings in the riak.conf file
+*value type* String
+*default value* null

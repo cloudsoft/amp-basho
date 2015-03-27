@@ -9,11 +9,11 @@ import brooklyn.event.basic.PortAttributeSensorAndConfigKey;
 @ImplementedBy(RiakEnterpriseNodeImpl.class)
 public interface RiakEnterpriseNode extends RiakNode {
     ConfigKey<String> RIAK_ADVANCED_CONFIG_TEMPLATE_URL = ConfigKeys.newStringConfigKey(
-            "riak.advancedConfig.templateUrl", "Template file (in freemarker format) for the advanced.config file",
+            "riak.advancedConfig.templateUrl", "URL of Template file (in freemarker format) for the advanced.config file",
             "classpath://advanced.config");
 
     ConfigKey<String> RIAK_CONFIG_FILE = ConfigKeys.newStringConfigKey(
-            "riak.advancedConfig.file", "Template file (in freemarker format) for the advanced.config file");
+            "riak.additionalConfig.file", "Template file (in freemarker format) for setting up additional settings in the riak.conf file");
 
     PortAttributeSensorAndConfigKey CLUSTER_MANAGER_PORT = new PortAttributeSensorAndConfigKey("riak.replication.cluster.manager.port",
             "Cluster Manager Port", "9080+");
