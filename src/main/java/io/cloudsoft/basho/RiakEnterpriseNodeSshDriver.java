@@ -30,11 +30,21 @@ public class RiakEnterpriseNodeSshDriver extends RiakNodeSshDriver implements Ri
     @Override
     public void customize() {
         super.customize();
-        List<String> commands = Lists.newLinkedList();
+
+        // TODO remove the old advanced.config
+        // http://docs.basho.com/riak/latest/ops/advanced/configs/configuration-files/#The-advanced-config-file
         String advancedConfigTemplate = processTemplate(entity.getConfig(RiakEnterpriseNode.RIAK_ADVANCED_CONFIG_TEMPLATE_URL));
         String saveAsAdvancedConfig = Urls.mergePaths(getRunDir(), "advanced.config");
         DynamicTasks.queueIfPossible(SshEffectorTasks.put(saveAsAdvancedConfig).contents(advancedConfigTemplate));
-        commands.add(sudo("mv " + saveAsAdvancedConfig + " " + getRiakEtcDir()));
+
+        String configTemplate = processTemplateContents(entity.getConfig(RiakEnterpriseNode.RIAK_CONFIG_FILE));
+        DynamicTasks.queueIfPossible(SshEffectorTasks.put(saveAsAdvancedConfig).contents(configTemplate));
+        String saveAsConfig = Urls.mergePaths(getRunDir(), "riak_extra.conf");
+
+        List<String> commands = ImmutableList.<String>builder()
+                .add(sudo("mv " + saveAsAdvancedConfig + " " + getRiakEtcDir()))
+                .add(sudo("cat " + saveAsConfig + " >> " + getRiakEtcDir() + "/riak.conf"))
+                .build();
         ScriptHelper customizeScript = newScript(CUSTOMIZING)
                 .failOnNonZeroResultCode()
                 .body.append(commands);

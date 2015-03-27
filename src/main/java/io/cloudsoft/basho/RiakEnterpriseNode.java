@@ -12,6 +12,9 @@ public interface RiakEnterpriseNode extends RiakNode {
             "riak.advancedConfig.templateUrl", "Template file (in freemarker format) for the advanced.config file",
             "classpath://advanced.config");
 
+    ConfigKey<String> RIAK_CONFIG_FILE = ConfigKeys.newStringConfigKey(
+            "riak.advancedConfig.file", "Template file (in freemarker format) for the advanced.config file");
+
     PortAttributeSensorAndConfigKey CLUSTER_MANAGER_PORT = new PortAttributeSensorAndConfigKey("riak.replication.cluster.manager.port",
             "Cluster Manager Port", "9080+");
 
