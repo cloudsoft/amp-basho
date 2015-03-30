@@ -43,7 +43,8 @@ location:
 services:
 - type: io.cloudsoft.basho.RiakEnterpriseCluster
   initialSize: 3
-  download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/7/riak-ee-2.0.5-1.el7.centos.x86_64.rpm
+  brooklyn.config:
+    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/7/riak-ee-2.0.5-1.el7.centos.x86_64.rpm
 ```
 
 Replace `YOUR_DOWNLOAD_URL` with the URL supplied by Basho, in this case for CentOS 7,

@@ -27,10 +27,11 @@ services:
   name: Riak Cluster
   id: riak-cluster
   initialSize: 3
-  download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/7/riak-ee-2.0.5-1.el7.centos.x86_64.rpm
-  riak.additionalConfig.file: |
-    javascript.hook_pool_size = 3
-    javascript.map_pool_size = 9
+  brooklyn.config:
+    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/7/riak-ee-2.0.5-1.el7.centos.x86_64.rpm
+    riak.additionalConfig.file: |
+      javascript.hook_pool_size = 3
+      javascript.map_pool_size = 9
 - type: brooklyn.entity.webapp.ControlledDynamicWebAppCluster
   name: Web Cluster
   brooklyn.config:
