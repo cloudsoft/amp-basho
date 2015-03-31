@@ -18,7 +18,7 @@ location:
   jclouds:aws-ec2:
     region: us-east-1
     osFamily: centos
-    osVersionRegex: 7\..*
+    hardwareId: m1.small
     identity: YOUR_IDENTITY
     credential: YOUR_CREDENTIAL
     

@@ -107,16 +107,6 @@
 
 <br>
 
-### install.dir
-
-*description* Directory for this software to be installed in<br>
-*value type* java.lang.String<br>
-*default value* <dd>${config['onbox.base.dir']!config['brooklyn.datadir']!'/
-<error>-ONBOX_BASE_DIR-not-set'}/installs/${(config['install.unique_label']??)?string(config['install.unique_label']!'X',(entity.entityType.simpleName)+((config['install.version']??)?string('_'+(config['install.version']!'X'),'')))}</error>
-</dd>
-
-<br>
-
 ### install.latch
 
 *description* Latch for blocking install until ready<br>

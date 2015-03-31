@@ -12,9 +12,9 @@ import brooklyn.location.basic.SshMachineLocation;
 import brooklyn.util.net.Urls;
 import brooklyn.util.task.DynamicTasks;
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 import java.util.List;
 
@@ -37,17 +37,19 @@ public class RiakEnterpriseNodeSshDriver extends RiakNodeSshDriver implements Ri
         String saveAsAdvancedConfig = Urls.mergePaths(getRunDir(), "advanced.config");
         DynamicTasks.queueIfPossible(SshEffectorTasks.put(saveAsAdvancedConfig).contents(advancedConfigTemplate));
 
-        String configTemplate = processTemplateContents(entity.getConfig(RiakEnterpriseNode.RIAK_CONFIG_FILE));
-        DynamicTasks.queueIfPossible(SshEffectorTasks.put(saveAsAdvancedConfig).contents(configTemplate));
-        String saveAsConfig = Urls.mergePaths(getRunDir(), "riak_extra.conf");
+        ImmutableList.Builder<String> commands = ImmutableList.<String>builder()
+                .add(sudo("mv " + saveAsAdvancedConfig + " " + getRiakEtcDir()));
 
-        List<String> commands = ImmutableList.<String>builder()
-                .add(sudo("mv " + saveAsAdvancedConfig + " " + getRiakEtcDir()))
-                .add(sudo("cat " + saveAsConfig + " >> " + getRiakEtcDir() + "/riak.conf"))
-                .build();
+        if(!Strings.isNullOrEmpty(entity.getConfig(RiakEnterpriseNode.RIAK_CONFIG_FILE))) {
+            String configTemplate = processTemplateContents(entity.getConfig(RiakEnterpriseNode.RIAK_CONFIG_FILE));
+            String saveAsConfig = Urls.mergePaths(getRunDir(), "riak_extra.conf");
+            DynamicTasks.queueIfPossible(SshEffectorTasks.put(saveAsConfig).contents(configTemplate));
+            commands.add(sudo("cat " + saveAsConfig + " >> " + getRiakEtcDir() + "/riak.conf"));
+        }
+
         ScriptHelper customizeScript = newScript(CUSTOMIZING)
                 .failOnNonZeroResultCode()
-                .body.append(commands);
+                .body.append(commands.build());
         customizeScript.execute();
     }
 
