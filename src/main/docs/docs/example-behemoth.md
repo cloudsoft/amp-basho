@@ -28,10 +28,10 @@ services:
   id: riak-fabric
   brooklyn.config:
     cluster.initial.size: 3
-    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/XXXXXX/2.0/2.0.5/rhel/7/riak-ee-2.0.5-1.el7.centos.x86_64.rpm
+    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/XXXXXX/2.0/2.0.5/rhel/6/riak-ee-2.0.5-1.el6.x86_64.rpm
     provisioning.properties:
       osFamily: centos
-      osVersionRegex: 7\..*
+      osVersionRegex: 6\..*
       minCores: 4
       minRam: 8gb
       
