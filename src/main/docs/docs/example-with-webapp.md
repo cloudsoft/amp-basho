@@ -18,7 +18,7 @@ location:
   jclouds:aws-ec2:
     region: us-east-1
     osFamily: centos
-    hardwareId: m1.small
+    osVersionRegex: 6\..*
     identity: YOUR_IDENTITY
     credential: YOUR_CREDENTIAL
     
@@ -28,7 +28,7 @@ services:
   id: riak-cluster
   initialSize: 3
   brooklyn.config:
-    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/7/riak-ee-2.0.5-1.el7.centos.x86_64.rpm
+    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/6/riak-ee-2.0.5-1.el6.x86_64.rpm
     riak.additionalConfig.file: |
       javascript.hook_pool_size = 3
       javascript.map_pool_size = 9

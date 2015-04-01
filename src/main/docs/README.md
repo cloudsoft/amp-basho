@@ -36,7 +36,8 @@ location:
   jclouds:aws-ec2:
     region: us-east-1
     osFamily: centos
-    hardwareId: m1.small
+    osVersionRegex: 6\..*
+    stopIptables: true
     identity: YOUR_IDENTITY
     credential: YOUR_CREDENTIAL
     
@@ -44,7 +45,7 @@ services:
 - type: io.cloudsoft.basho.RiakEnterpriseCluster
   initialSize: 3
   brooklyn.config:
-    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/7/riak-ee-2.0.5-1.el7.centos.x86_64.rpm
+    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/6/riak-ee-2.0.5-1.el6.x86_64.rpm
 ```
 
 Replace `YOUR_DOWNLOAD_URL` with the URL supplied by Basho, in this case for CentOS 7,
