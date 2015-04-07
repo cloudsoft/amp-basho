@@ -62,13 +62,17 @@ public class RiakEnterpriseClusterImpl extends RiakClusterImpl implements RiakEn
 
     private void initializeReplication() {
         String name = getConfig(CLUSTER_NAME);
-        Optional<RiakEnterpriseNode> anyNode = getAnyNode();
-        if (!anyNode.isPresent()) {
-            throw new IllegalStateException("Cannot initialize replication sinks as there are no nodes available");
+        if(name != null) {
+            Optional<RiakEnterpriseNode> anyNode = getAnyNode();
+
+            if (!anyNode.isPresent()) {
+                throw new IllegalStateException("Cannot initialize replication sinks as there are no nodes available");
+            }
+
+            anyNode.get().initializeReplication(name);
+            setAttribute(CLUSTER_NAME, name);
+            setAttribute(REPLICATION_INITIALIZED, true);
         }
-        anyNode.get().initializeReplication(name);
-        setAttribute(CLUSTER_NAME, name);
-        setAttribute(REPLICATION_INITIALIZED, true);
     }
 
     private Optional<RiakEnterpriseNode> getAnyNode() {
