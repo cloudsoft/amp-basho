@@ -1,25 +1,30 @@
 package io.cloudsoft.basho;
 
+import brooklyn.enricher.Enrichers;
 import brooklyn.entity.Entity;
-import brooklyn.entity.basic.Attributes;
 import brooklyn.entity.basic.EntityPredicates;
 import brooklyn.entity.group.AbstractMembershipTrackingPolicy;
 import brooklyn.entity.group.DynamicFabricImpl;
+import brooklyn.entity.nosql.riak.RiakCluster;
 import brooklyn.entity.proxying.EntitySpec;
 import brooklyn.event.SensorEvent;
 import brooklyn.event.SensorEventListener;
 import brooklyn.location.Location;
 import brooklyn.policy.PolicySpec;
+import brooklyn.util.text.StringFunctions;
+
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -43,6 +48,10 @@ public class RiakEnterpriseFabricImpl extends DynamicFabricImpl implements RiakE
                 .displayName("Riak Fabric Tracker")
                 .configure("sensorsToTrack", ImmutableSet.of(RiakEnterpriseCluster.REPLICATION_INITIALIZED))
                 .configure("group", this));
+        addEnricher(Enrichers.builder().aggregating(RiakCluster.NODE_LIST)
+            .fromMembers().excludingBlank()
+            .publishing(RiakCluster.NODE_LIST).computing(StringFunctions.joiner(","))
+            .build());
     }
 
     public static class MembershipTrackingPolicy extends AbstractMembershipTrackingPolicy {
