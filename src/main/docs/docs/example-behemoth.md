@@ -55,12 +55,15 @@ services:
       - 192.168.0.18
       
 # we'll also deploy a web-app with an auto-scaler policy
-- type: brooklyn.entity.webapp.ControlledDynamicWebAppCluster
-  name: Web Cluster
-  brooklyn.config:
-    wars.root: https://s3-eu-west-1.amazonaws.com/brooklyn-clocker/brooklyn-example-hello-world-sql-webapp.war
-    java.sysprops: 
-      brooklyn.example.riak.nodes: $brooklyn:component("riak-fabric").attributeWhenReady("riak.cluster.nodeList")
+- type: brooklyn.entity.webapp.DynamicWebAppFabric
+  name: Web App Fabric
+  memberSpec:
+    $brooklyn:entitySpec:
+      type: brooklyn.entity.webapp.jboss.JBoss7Server
+      brooklyn.config:
+        wars.root: https://s3-eu-west-1.amazonaws.com/brooklyn-clocker/brooklyn-example-hello-world-sql-webapp.war
+        java.sysprops:
+          brooklyn.example.riak.nodes: $brooklyn:component("riak-fabric").attributeWhenReady("riak.cluster.nodeList")
       
   brooklyn.policies:
   - type: brooklyn.policy.autoscaling.AutoScalerPolicy
