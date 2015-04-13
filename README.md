@@ -10,52 +10,36 @@ This uses [Apache Brooklyn](http://brooklyn.io)'s easy-to-use YAML blueprinting 
 combined with [Cloudsoft](http://cloudsoftcorp.com)'s enterprise-supported 
 Application Management Platform (AMP).
 
-These instructions cover how to build the project.
+For instance, deploy a Riak EE cluster with a configured elastic appserver 
+by posting the following YAML to Brooklyn:
 
-For instructions on running -- deploying Riak EE blueprints -- see [the distro's README](src/main/docs/README.md).
+```yaml
+services:
+- type: io.cloudsoft.basho.RiakEnterpriseCluster
+  id: riak-cluster
+  initialSize: 5
+  brooklyn.config:
+    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/6/riak-ee-2.0.5-1.el6.x86_64.rpm
+- type: brooklyn.entity.webapp.ControlledDynamicWebAppCluster
+  initialSize: 3
+  brooklyn.config:
+    wars.root: https://s3-eu-west-1.amazonaws.com/brooklyn-clocker/brooklyn-example-hello-world-sql-webapp.war
+    java.sysprops: 
+      brooklyn.example.riak.nodes: $brooklyn:component("riak-cluster").attributeWhenReady("riak.cluster.nodeList")
+location: jclouds:aws-ec2
+```
+
+More options, and info on configuring locations, is included in the [runtime docs](src/main/docs/README.md). 
 
 
-Building this Project
+Interested? What Next?
 ---
 
-To build this project, with Java 7 and Maven 3 installed, simply run:
+* Download the latest [release](https://github.com/cloudsoft/amp-basho/releases) tarball and get started
 
-    mvn clean install assembly:single
-    
-This will build and install a `...-dist.tar.gz` in `target/` which can be redistributed, 
-expanded, and run anywhere where Java is installed to run AMP-Basho.
+* Browse runtime docs [online](src/main/docs/README.md) (these are also included in the release download)
 
-Instructions on running are included in the README in that tarball.
-
-
-Release Build
----
-
-For a release build, we want to include Cloudsoft AMP instead of Apache Brooklyn
-and ensure the latest version of the docs are built.  To do this
-you will require jekyll setup (as described [here](https://github.com/apache/incubator-brooklyn/blob/master/docs/README.md)) and a local maven install of Cloudsoft AMP:
-
-    pushd src/main/docs ; rm -rf _site ; jekyll build ; popd
-    mvn clean install assembly:single -Pamp
-
-
-Other Ways of Running
----
-
-There are other ways of running this as well:
-
-* **Dropins JAR**: The JAR which is built can be added to the `dropins` directory in Apache Brooklyn or Cloudsoft AMP,
-  using the standard distributions of those software instead of the redistributable build here.
-  This is advantageous when combining with other Java blueprints, including [Clocker](http://clocker.io).
-
-* **OSGi**: The JAR which is built is an OSGi bundle; this can be referenced in YAML blueprints 
-  added to the Brooklyn catalog in the usual Brooklyn way. And advantage of the OSGi approach
-  is that new versions can be added dynamically with multiple versions run concurrently.
-
-It is also an option to include a custom GUI with this project, 
-suitable for a team to manage their deployments, including debugging,
-or to stand up a custom GUI in front of this, consuming the REST API, 
-suitable for a simplified multi-tenant front-end (a.k.a. an *easy deployment tool*).
+* Read [the source code docs](docs/building-from-source.md) including how to build this project
 
 
 License

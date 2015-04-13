@@ -63,7 +63,7 @@ services:
       brooklyn.example.riak.nodes: $brooklyn:component("riak-fabric").attributeWhenReady("riak.cluster.nodeList")
       
   brooklyn.policies:
-  - policyType: brooklyn.policy.autoscaling.AutoScalerPolicy
+  - type: brooklyn.policy.autoscaling.AutoScalerPolicy
     brooklyn.config:
       metric: $brooklyn:sensor("brooklyn.entity.webapp.DynamicWebAppCluster", "webapp.reqs.perSec.windowed.perNode")
       metricLowerBound: 10
@@ -71,7 +71,7 @@ services:
       minPoolSize: 1
       maxPoolSize: 5
       
-  location:
+  locations:
   # our web app is just in CA
   - jclouds:aws-ec2:us-west-1:
       identity: YOUR_AWS_IDENTITY
