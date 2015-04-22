@@ -393,14 +393,14 @@ The properties bellow are only available in the amp-basho (the enterprise brookl
 
 <br>
 
-### riak.additionalConfig.file
+### riak.riakConf.additionalContent
 
 *description* Template file (in freemarker format) for setting up additional settings in the riak.conf file
 *value type* String
 *default value* null
 *example*
 <pre>
-  riak.additionalConfig.file: |
+  riak.riakConf.additionalContent: |
     javascript.hook_pool_size = 3
     javascript.map_pool_size = 9
 </pre>

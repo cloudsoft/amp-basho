@@ -29,7 +29,7 @@ services:
   initialSize: 3
   brooklyn.config:
     download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/6/riak-ee-2.0.5-1.el6.x86_64.rpm
-    riak.additionalConfig.file: |
+    riak.riakConf.additionalContent: |
       javascript.hook_pool_size = 3
       javascript.map_pool_size = 9
 - type: brooklyn.entity.webapp.ControlledDynamicWebAppCluster

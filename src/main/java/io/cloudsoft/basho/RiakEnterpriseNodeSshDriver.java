@@ -40,13 +40,6 @@ public class RiakEnterpriseNodeSshDriver extends RiakNodeSshDriver implements Ri
         ImmutableList.Builder<String> commands = ImmutableList.<String>builder()
                 .add(sudo("mv " + saveAsAdvancedConfig + " " + getRiakEtcDir()));
 
-        if(!Strings.isNullOrEmpty(entity.getConfig(RiakEnterpriseNode.RIAK_CONFIG_FILE))) {
-            String configTemplate = processTemplateContents(entity.getConfig(RiakEnterpriseNode.RIAK_CONFIG_FILE));
-            String saveAsConfig = Urls.mergePaths(getRunDir(), "riak_extra.conf");
-            DynamicTasks.queueIfPossible(SshEffectorTasks.put(saveAsConfig).contents(configTemplate));
-            commands.add(sudo("cat " + saveAsConfig + " >> " + getRiakEtcDir() + "/riak.conf"));
-        }
-
         ScriptHelper customizeScript = newScript(CUSTOMIZING)
                 .failOnNonZeroResultCode()
                 .body.append(commands.build());
