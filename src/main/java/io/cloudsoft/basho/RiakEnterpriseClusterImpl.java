@@ -1,16 +1,17 @@
 package io.cloudsoft.basho;
 
+import java.util.Collection;
+import java.util.Set;
+
+import com.google.common.base.Optional;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
+
 import brooklyn.entity.Entity;
 import brooklyn.entity.basic.EntityPredicates;
 import brooklyn.entity.nosql.riak.RiakClusterImpl;
 import brooklyn.entity.proxying.EntitySpec;
 import brooklyn.location.Location;
-import com.beust.jcommander.internal.Sets;
-import com.google.common.base.Optional;
-import com.google.common.collect.Iterables;
-
-import java.util.Collection;
-import java.util.Set;
 
 public class RiakEnterpriseClusterImpl extends RiakClusterImpl implements RiakEnterpriseCluster {
 
