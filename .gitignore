@@ -22,7 +22,7 @@ test-output/
 prodDb.*
 
 *.log
-brooklyn*.log.*
+*.log.zip
 
 *brooklyn-persisted-state/
 
