@@ -19,7 +19,10 @@
 
 name: Riak Enterprise Cluster with Webapp
 
-location: softlayer:sjc01
+location:
+  # NB: you must provide credentials, either here or in brooklyn.properties
+  # For more info see:  http://brooklyn.apache.org/v/latest/ops/locations/
+  softlayer:sjc01
 
 services:
 
@@ -37,6 +40,6 @@ services:
   name: My Web
   brooklyn.config:
     initialSize: 2
-    wars.root: "classpath://brooklyn-example-hello-world-sql-webapp.war"
+    wars.root: "http://search.maven.org/remotecontent?filepath=org/apache/brooklyn/example/brooklyn-example-hello-world-sql-webapp/0.8.0-incubating/brooklyn-example-hello-world-sql-webapp-0.8.0-incubating.war"
     java.sysprops:
       brooklyn.example.riak.nodes: $brooklyn:component("mycluster").attributeWhenReady("riak.cluster.nodeList")

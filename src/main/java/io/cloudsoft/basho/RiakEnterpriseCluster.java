@@ -2,18 +2,20 @@ package io.cloudsoft.basho;
 
 import java.util.Set;
 
-import com.google.common.reflect.TypeToken;
-
-import org.apache.brooklyn.core.annotation.Effector;
-import org.apache.brooklyn.core.annotation.EffectorParam;
-import org.apache.brooklyn.entity.nosql.riak.RiakCluster;
-import org.apache.brooklyn.entity.nosql.riak.RiakNode;
+import org.apache.brooklyn.api.entity.EntitySpec;
 import org.apache.brooklyn.api.entity.ImplementedBy;
 import org.apache.brooklyn.api.sensor.AttributeSensor;
+import org.apache.brooklyn.config.ConfigKey;
+import org.apache.brooklyn.core.annotation.Effector;
+import org.apache.brooklyn.core.annotation.EffectorParam;
+import org.apache.brooklyn.core.config.ConfigKeys;
 import org.apache.brooklyn.core.sensor.AttributeSensorAndConfigKey;
 import org.apache.brooklyn.core.sensor.BasicAttributeSensorAndConfigKey;
 import org.apache.brooklyn.core.sensor.Sensors;
+import org.apache.brooklyn.entity.nosql.riak.RiakCluster;
 import org.apache.brooklyn.util.core.flags.SetFromFlag;
+
+import com.google.common.reflect.TypeToken;
 
 @ImplementedBy(RiakEnterpriseClusterImpl.class)
 public interface RiakEnterpriseCluster extends RiakCluster {
@@ -29,21 +31,26 @@ public interface RiakEnterpriseCluster extends RiakCluster {
     AttributeSensor<Set<RiakEnterpriseCluster>> REPLICATION_SINKS = Sensors.newSensor(new TypeToken<Set<RiakEnterpriseCluster>>(){},
         "riak.cluster.replication.sinks", "Set of RiakEnterpriseClusters currently acting as replication sinks to this cluster");
 
+    ConfigKey<EntitySpec<?>> MEMBER_SPEC = ConfigKeys.newConfigKeyWithDefault(RiakCluster.MEMBER_SPEC, EntitySpec.create(RiakEnterpriseNode.class));
+    
     void updateReplication(Set<RiakEnterpriseCluster> upClusters);
 
     @Effector(description="Manually initiates a fullsync operation with connected sites.")
     void triggerFullSync(@EffectorParam(name = "clusterSink", description = "cluster to make sync with") String clusterName);
     
     @SetFromFlag("downloadUrlRhelCentos")
-    AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL_RHEL_CENTOS = RiakNode.DOWNLOAD_URL_RHEL_CENTOS;
+    AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL_RHEL_CENTOS = RiakEnterpriseNode.DOWNLOAD_URL_RHEL_CENTOS;
 
     @SetFromFlag("downloadUrlUbuntu")
-    AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL_UBUNTU = RiakNode.DOWNLOAD_URL_UBUNTU;
-
+    AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL_UBUNTU = RiakEnterpriseNode.DOWNLOAD_URL_UBUNTU;
+    
     @SetFromFlag("downloadUrlDebian")
-    AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL_DEBIAN = RiakNode.DOWNLOAD_URL_DEBIAN;
+    AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL_DEBIAN = RiakEnterpriseNode.DOWNLOAD_URL_DEBIAN; 
 
     @SetFromFlag("downloadUrlMac")
-    AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL_MAC = RiakNode.DOWNLOAD_URL_MAC;
+    AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL_MAC = RiakEnterpriseNode.DOWNLOAD_URL_MAC; 
+
+    @SetFromFlag("downloadUrl")
+    AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL = RiakEnterpriseNode.DOWNLOAD_URL; 
 
 }

@@ -1,14 +1,16 @@
 name: Riak Fabric
 
 locations:
+# NB: you must provide credentials, either here or in brooklyn.properties
+# For more info see:  http://brooklyn.apache.org/v/latest/ops/locations/
 - softlayer:ams01
-- softlayer:lon02
+- jclouds:aws-ec2:us-west-1
 
 services:
 - type: io.cloudsoft.basho.RiakEnterpriseFabric
   brooklyn.config:
     cluster.initial.size: 3
-    download.url.rhelcentos: TODO
+    download.url: TODO
     provisioning.properties:
       osFamily: centos
       minCores: 2

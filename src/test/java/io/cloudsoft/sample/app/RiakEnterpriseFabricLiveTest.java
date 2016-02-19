@@ -40,10 +40,15 @@ import com.google.common.collect.Iterables;
 public class RiakEnterpriseFabricLiveTest {
     private static final Logger LOG = LoggerFactory.getLogger(RiakEnterpriseFabricLiveTest.class);
 
-    private final Map<String, String> DOWNLOAD_URLS = ImmutableMap.of(
-        "centos", Preconditions.checkNotNull(System.getProperty("riak.download.url.rhelcentos"), "System property: riak.download.url.rhelcentos"),
-        "ubuntu", Preconditions.checkNotNull(System.getProperty("riak.download.url.ubuntu"), "System property: riak.download.url.ubuntu")
-    );
+    private static class RiakDownloadUrls {
+        private final Map<String, String> BY_OS = ImmutableMap.of(
+            "centos", getSystemProperty("riak.download.url.rhelcentos"),
+            "ubuntu", getSystemProperty("riak.download.url.ubuntu")
+        );
+        private static String getSystemProperty(String property) {
+            return Preconditions.checkNotNull(System.getProperty(property), "System property: "+property);
+        }
+    }
 
     protected TestApplication app;
     protected ManagementContext management;
@@ -75,8 +80,8 @@ public class RiakEnterpriseFabricLiveTest {
     protected void testFabric(String provider1, String osFamily1, String provider2, String osFamily2) {
         LOG.info("Testing Riak Enterprise Fabric in {} (on {}) and {} (on {})", new Object[] {provider1, osFamily1, provider2, osFamily2});
         Map<String, String> downloadProperties = ImmutableMap.of(
-                "download.url.rhelcentos", DOWNLOAD_URLS.get("centos"),
-                "download.url.ubuntu", DOWNLOAD_URLS.get("ubuntu")
+                "download.url.rhelcentos", new RiakDownloadUrls().BY_OS.get("centos"),
+                "download.url.ubuntu", new RiakDownloadUrls().BY_OS.get("ubuntu")
         );
         Location location1 = app.getManagementContext().getLocationRegistry()
                 .resolve(provider1, ImmutableMap.of("osFamily", osFamily1, "openIptables", true));

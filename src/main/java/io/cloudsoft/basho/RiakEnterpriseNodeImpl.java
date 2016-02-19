@@ -1,9 +1,13 @@
 package io.cloudsoft.basho;
 
-import org.apache.brooklyn.entity.nosql.riak.RiakNode;
-import org.apache.brooklyn.entity.nosql.riak.RiakNodeImpl;
+import java.util.List;
+
 import org.apache.brooklyn.core.sensor.AttributeSensorAndConfigKey;
+import org.apache.brooklyn.entity.nosql.riak.RiakNodeImpl;
+import org.apache.brooklyn.util.text.Strings;
+
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 
 public class RiakEnterpriseNodeImpl extends RiakNodeImpl implements RiakEnterpriseNode {
 
@@ -11,14 +15,30 @@ public class RiakEnterpriseNodeImpl extends RiakNodeImpl implements RiakEnterpri
     public void init() {
         super.init();
 
-        AttributeSensorAndConfigKey[] downloadProperties = {RiakNode.DOWNLOAD_URL_DEBIAN, RiakNode.DOWNLOAD_URL_UBUNTU, RiakNode.DOWNLOAD_URL_RHEL_CENTOS};
-        String[] mapDownloadPropertiesToString = new String[downloadProperties.length];
-        for(int i = 0; i < downloadProperties.length; i++) {
-            mapDownloadPropertiesToString[i] = downloadProperties[i].getName();
+        List<AttributeSensorAndConfigKey<String,String>> downloadUrlConfigs = ImmutableList.of( 
+                RiakEnterpriseNode.DOWNLOAD_URL_UBUNTU, 
+                RiakEnterpriseNode.DOWNLOAD_URL_RHEL_CENTOS,
+                RiakEnterpriseNode.DOWNLOAD_URL_DEBIAN, 
+                RiakEnterpriseNode.DOWNLOAD_URL_MAC);
+        
+        String defaultDownload = getConfig(RiakEnterpriseNode.DOWNLOAD_URL);
+        boolean found = false;
+        for (AttributeSensorAndConfigKey<String,String> key: downloadUrlConfigs) {
+            if (Strings.isBlank( getConfig(key) )) {
+                if (Strings.isNonBlank(defaultDownload)) {
+                    config().set(key, defaultDownload);
+                    found = true;
+                } else {
+                    config().set(key, "URL_MISSING__"+key.getName());
+                }
+            } else {
+                found = true;
+            }
         }
 
-        Preconditions.checkNotNull(isPackageDownloadUrlProvided() ? RiakNode.DOWNLOAD_URL_RHEL_CENTOS : null,
-                "For the enterprise version, You have to specify some of the possible: " + org.apache.commons.lang.StringUtils.join(mapDownloadPropertiesToString, ','));
+        Preconditions.checkArgument(found,
+                "At least one enterprise download URL must be supplied for the enterprise edition, such as "
+                + RiakEnterpriseNode.DOWNLOAD_URL.getName());
     }
 
    @Override
@@ -26,6 +46,7 @@ public class RiakEnterpriseNodeImpl extends RiakNodeImpl implements RiakEnterpri
       return (RiakEnterpriseNodeDriver) super.getDriver();
    }
 
+   @SuppressWarnings({ "rawtypes", "unchecked" })
    @Override
    public Class getDriverInterface() {
       return RiakEnterpriseNodeDriver.class;

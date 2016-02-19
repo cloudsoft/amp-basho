@@ -7,7 +7,8 @@ AMP-Basho: Build Instructions
 
 These instructions cover how to build the project.
 
-For instructions on running -- deploying Riak EE blueprints -- see [the distro's README](../src/main/docs/README.md).
+For instructions on running -- deploying Riak EE blueprints -- 
+see [the distro's README](../src/main/docs/README.md).
 
 
 Building this Project
@@ -15,7 +16,7 @@ Building this Project
 
 To build this project, with Java 7 and Maven 3 installed, simply run:
 
-    mvn clean install assembly:single
+    mvn clean install
     
 This will build and install a `...-dist.tar.gz` in `target/` which can be redistributed, 
 expanded, and run anywhere where Java is installed to run AMP-Basho.
@@ -27,11 +28,14 @@ Release Build
 ---
 
 For a release build, we want to include Cloudsoft AMP instead of Apache Brooklyn
-and ensure the latest version of the docs are built.  To do this
-you will require jekyll setup (as described [here](https://github.com/apache/incubator-brooklyn/blob/master/docs/README.md)) and a local maven install of Cloudsoft AMP:
+and ensure the latest version of the docs are built.  
+To do this you will require 
+jekyll setup (as described [here](https://github.com/apache/brooklyn-docs/blob/master/README.md)) and 
+Cloudsoft AMP available in your maven environment. 
+Then:
 
     pushd src/main/docs ; rm -rf _site ; jekyll build ; popd
-    mvn clean install assembly:single -Pamp
+    mvn clean install -Pamp
 
 
 Other Ways of Running
@@ -57,6 +61,6 @@ License
 ---
 
 AMP-Basho is built on [Cloudsoft AMP](http://www.cloudsoftcorp.com) and [Apache Brooklyn](http://brooklyn.io)
-and is copyright &copy; 2015 by Cloudsoft Corporation and Basho.
+and is copyright &copy; 2016 by Cloudsoft Corporation and Basho.
 
 This software is released under the terms of [the Cloudsoft EULA](../LICENSE.txt).

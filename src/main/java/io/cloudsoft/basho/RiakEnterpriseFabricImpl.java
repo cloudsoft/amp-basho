@@ -89,6 +89,7 @@ public class RiakEnterpriseFabricImpl extends DynamicFabricImpl implements RiakE
         }
     }
 
+    @SuppressWarnings({"unchecked","rawtypes"})
     @Override
     protected Entity createCluster(Location location, Map flags) {
         Function<Location, String> clusterNamer = getConfig(CLUSTER_NAMER);
@@ -118,7 +119,7 @@ public class RiakEnterpriseFabricImpl extends DynamicFabricImpl implements RiakE
         subscribeToMembers(this, SERVICE_UP, new SensorEventListener<Boolean>() {
             @Override
             public void onEvent(SensorEvent<Boolean> event) {
-                setAttribute(SERVICE_UP, calculateServiceUp());
+                sensors().set(SERVICE_UP, calculateServiceUp());
             }
         });
     }

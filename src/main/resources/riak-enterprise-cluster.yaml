@@ -19,7 +19,10 @@
 
 name: Riak Enterprise Cluster
 
-location: softlayer:sjc01
+location:
+  # NB: you must provide credentials, either here or in brooklyn.properties
+  # For more info see:  http://brooklyn.apache.org/v/latest/ops/locations/
+  softlayer:sjc01
 
 services:
 
@@ -30,5 +33,6 @@ services:
     download.url.rhelcentos: TODO
     provisioning.properties:
       osFamily: centos
+      stopIptables: true
       minCores: 4
       minRam: 8192

@@ -3,15 +3,14 @@ package io.cloudsoft.basho;
 import java.util.Collection;
 import java.util.Set;
 
+import org.apache.brooklyn.api.entity.Entity;
+import org.apache.brooklyn.api.location.Location;
+import org.apache.brooklyn.core.entity.EntityPredicates;
+import org.apache.brooklyn.entity.nosql.riak.RiakClusterImpl;
+
 import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
-
-import org.apache.brooklyn.api.entity.Entity;
-import org.apache.brooklyn.core.entity.EntityPredicates;
-import org.apache.brooklyn.entity.nosql.riak.RiakClusterImpl;
-import org.apache.brooklyn.api.entity.EntitySpec;
-import org.apache.brooklyn.api.location.Location;
 
 public class RiakEnterpriseClusterImpl extends RiakClusterImpl implements RiakEnterpriseCluster {
 
@@ -44,7 +43,7 @@ public class RiakEnterpriseClusterImpl extends RiakClusterImpl implements RiakEn
             }
         }
 
-        setAttribute(REPLICATION_SINKS, sinks);
+        sensors().set(REPLICATION_SINKS, sinks);
     }
 
     @Override
@@ -57,10 +56,6 @@ public class RiakEnterpriseClusterImpl extends RiakClusterImpl implements RiakEn
         anyNode.get().triggerFullSync(clusterName);
     }
 
-    protected EntitySpec<?> getMemberSpec() {
-        return getConfig(MEMBER_SPEC, EntitySpec.create(RiakEnterpriseNode.class));
-    }
-
     private void initializeReplication() {
         String name = getConfig(CLUSTER_NAME);
         if(name != null) {
@@ -71,8 +66,8 @@ public class RiakEnterpriseClusterImpl extends RiakClusterImpl implements RiakEn
             }
 
             anyNode.get().initializeReplication(name);
-            setAttribute(CLUSTER_NAME, name);
-            setAttribute(REPLICATION_INITIALIZED, true);
+            sensors().set(CLUSTER_NAME, name);
+            sensors().set(REPLICATION_INITIALIZED, true);
         }
     }
 

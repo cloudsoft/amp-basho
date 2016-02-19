@@ -21,10 +21,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <bundle.version>2.3.7</bundle.version>
-        <jar.version>2.4</jar.version>
-        <compiler.version>3.1</compiler.version>
-        <amp.version>2.0.0-SNAPSHOT</amp.version>
+        <amp.version>3.0.0</amp.version>
     </properties>
 
   <repositories>
@@ -66,7 +63,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler.version}</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -93,7 +89,6 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>${bundle.version}</version>
                 <extensions>true</extensions>
                 <executions>
                     <execution>
@@ -116,7 +111,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>${jar.version}</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -133,7 +127,8 @@
 
   <profiles>
     <profile>
-      <!-- amp profile builds with Cloudsoft AMP instead of Apache Brooklyn -->
+      <!-- amp profile builds with Cloudsoft AMP instead of Apache Brooklyn.
+           requires assumes AMP is available in repo configured locally. -->
       <id>amp</id>
       <dependencies>
         <dependency>
@@ -202,7 +197,6 @@
         <dependency>
             <groupId>org.apache.brooklyn</groupId>
             <artifactId>brooklyn-all</artifactId>
-            <version>${brooklyn.version}</version>
         </dependency>
       </dependencies>
     </profile>
