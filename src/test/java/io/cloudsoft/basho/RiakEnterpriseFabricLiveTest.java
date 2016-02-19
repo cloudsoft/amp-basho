@@ -1,8 +1,4 @@
-package io.cloudsoft.sample.app;
-
-import io.cloudsoft.basho.RiakEnterpriseCluster;
-import io.cloudsoft.basho.RiakEnterpriseFabric;
-import io.cloudsoft.basho.RiakEnterpriseNode;
+package io.cloudsoft.basho;
 
 import java.net.URI;
 import java.util.List;
@@ -16,13 +12,13 @@ import org.apache.brooklyn.api.location.Location;
 import org.apache.brooklyn.api.mgmt.ManagementContext;
 import org.apache.brooklyn.core.entity.Attributes;
 import org.apache.brooklyn.core.entity.Entities;
+import org.apache.brooklyn.core.entity.EntityAsserts;
 import org.apache.brooklyn.core.test.entity.LocalManagementContextForTests;
 import org.apache.brooklyn.core.test.entity.TestApplication;
 import org.apache.brooklyn.entity.group.Cluster;
 import org.apache.brooklyn.test.Asserts;
-import org.apache.brooklyn.test.EntityTestUtils;
-import org.apache.brooklyn.util.core.http.HttpTool;
-import org.apache.brooklyn.util.core.http.HttpToolResponse;
+import org.apache.brooklyn.util.http.HttpTool;
+import org.apache.brooklyn.util.http.HttpToolResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -32,21 +28,31 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Function;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 
 public class RiakEnterpriseFabricLiveTest {
     private static final Logger LOG = LoggerFactory.getLogger(RiakEnterpriseFabricLiveTest.class);
+    public static final String RIAK_DOWNLOAD_CODE = "riak.download.code";
 
-    private static class RiakDownloadUrls {
+    public static class RiakDownloadUrls {
         private final Map<String, String> BY_OS = ImmutableMap.of(
-            "centos", getSystemProperty("riak.download.url.rhelcentos"),
-            "ubuntu", getSystemProperty("riak.download.url.ubuntu")
+            "centos", getCentosUrl(),
+            "ubuntu", getUbuntuUrl()
         );
-        private static String getSystemProperty(String property) {
-            return Preconditions.checkNotNull(System.getProperty(property), "System property: "+property);
+        public static String getUbuntuUrl() {
+            return getUrlFromSystemProperty("riak.download.url.ubuntu", "http://s3.amazonaws.com/private.downloads.basho.com/riak_ee/%s/2.1.3/ubuntu/trusty/riak-ee_2.1.3-1_amd64.deb");
+        }
+        public static String getCentosUrl() {
+            return getUrlFromSystemProperty("riak.download.url.rhelcentos", "http://s3.amazonaws.com/private.downloads.basho.com/riak_ee/%s/2.1.3/rhel/7/riak-ee-2.1.3-1.el7.centos.x86_64.rpm");
+        }
+        private static String getUrlFromSystemProperty(String property, String template) {
+            String url = System.getProperty(property);
+            if (url!=null) return url;
+            String code = System.getProperty(RIAK_DOWNLOAD_CODE);
+            if (code!=null) return String.format(template, code);
+            throw new IllegalStateException("Test requires either '"+RIAK_DOWNLOAD_CODE+"' or '"+property+"' set as a system property.");
         }
     }
 
@@ -93,7 +99,7 @@ public class RiakEnterpriseFabricLiveTest {
             .configure(Cluster.INITIAL_SIZE, 2)
             .configure(downloadProperties));
         app.start(ImmutableList.of(location1, location2));
-        EntityTestUtils.assertAttributeEqualsEventually(fabric, Attributes.SERVICE_UP, true);
+        EntityAsserts.assertAttributeEqualsEventually(fabric, Attributes.SERVICE_UP, true);
         Assert.assertEquals(fabric.getMembers().size(), 2);
 
         List<RiakEnterpriseCluster> clusterList = ImmutableList.copyOf(Iterables.transform(fabric.getMembers(), new Function<Entity, RiakEnterpriseCluster>() {

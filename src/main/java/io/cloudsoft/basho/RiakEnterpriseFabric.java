@@ -1,5 +1,7 @@
 package io.cloudsoft.basho;
 
+import io.cloudsoft.basho.RiakEnterpriseNode.RiakOsType;
+
 import org.apache.brooklyn.config.ConfigKey;
 import org.apache.brooklyn.core.config.ConfigKeys;
 import org.apache.brooklyn.core.sensor.AttributeSensorAndConfigKey;
@@ -18,7 +20,9 @@ public interface RiakEnterpriseFabric extends DynamicFabric {
     ConfigKey<? extends Function<Location,String>> CLUSTER_NAMER = ConfigKeys.newConfigKey(new TypeToken<Function<Location, String>>() {},
         "riak.fabric.cluster.namer", "Function used to provide the riak.replication.clusterName for a given location");
     
-    
+    @SetFromFlag("os")
+    ConfigKey<RiakOsType> OS_TYPE = RiakEnterpriseNode.OS_TYPE;
+
     @SetFromFlag("downloadUrlRhelCentos")
     AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL_RHEL_CENTOS = RiakEnterpriseNode.DOWNLOAD_URL_RHEL_CENTOS;
 

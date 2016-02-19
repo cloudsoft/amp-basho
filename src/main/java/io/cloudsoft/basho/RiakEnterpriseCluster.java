@@ -1,5 +1,7 @@
 package io.cloudsoft.basho;
 
+import io.cloudsoft.basho.RiakEnterpriseNode.RiakOsType;
+
 import java.util.Set;
 
 import org.apache.brooklyn.api.entity.EntitySpec;
@@ -37,6 +39,9 @@ public interface RiakEnterpriseCluster extends RiakCluster {
 
     @Effector(description="Manually initiates a fullsync operation with connected sites.")
     void triggerFullSync(@EffectorParam(name = "clusterSink", description = "cluster to make sync with") String clusterName);
+    
+    @SetFromFlag("os")
+    ConfigKey<RiakOsType> OS_TYPE = RiakEnterpriseNode.OS_TYPE;
     
     @SetFromFlag("downloadUrlRhelCentos")
     AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL_RHEL_CENTOS = RiakEnterpriseNode.DOWNLOAD_URL_RHEL_CENTOS;
