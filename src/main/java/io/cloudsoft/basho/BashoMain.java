@@ -1,7 +1,7 @@
 package io.cloudsoft.basho;
 
-import brooklyn.catalog.BrooklynCatalog;
-import brooklyn.cli.Main;
+import org.apache.brooklyn.api.catalog.BrooklynCatalog;
+import org.apache.brooklyn.cli.Main;
 import io.airlift.command.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

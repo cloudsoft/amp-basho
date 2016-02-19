@@ -1,8 +1,8 @@
 package io.cloudsoft.basho;
 
-import brooklyn.entity.nosql.riak.RiakNode;
-import brooklyn.entity.nosql.riak.RiakNodeImpl;
-import brooklyn.event.basic.AttributeSensorAndConfigKey;
+import org.apache.brooklyn.entity.nosql.riak.RiakNode;
+import org.apache.brooklyn.entity.nosql.riak.RiakNodeImpl;
+import org.apache.brooklyn.core.sensor.AttributeSensorAndConfigKey;
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 
 public class RiakEnterpriseNodeImpl extends RiakNodeImpl implements RiakEnterpriseNode {

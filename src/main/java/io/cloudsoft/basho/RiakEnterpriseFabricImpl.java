@@ -1,17 +1,17 @@
 package io.cloudsoft.basho;
 
-import brooklyn.enricher.Enrichers;
-import brooklyn.entity.Entity;
-import brooklyn.entity.basic.EntityPredicates;
-import brooklyn.entity.group.AbstractMembershipTrackingPolicy;
-import brooklyn.entity.group.DynamicFabricImpl;
-import brooklyn.entity.nosql.riak.RiakCluster;
-import brooklyn.entity.proxying.EntitySpec;
-import brooklyn.event.SensorEvent;
-import brooklyn.event.SensorEventListener;
-import brooklyn.location.Location;
-import brooklyn.policy.PolicySpec;
-import brooklyn.util.text.StringFunctions;
+import org.apache.brooklyn.enricher.stock.Enrichers;
+import org.apache.brooklyn.api.entity.Entity;
+import org.apache.brooklyn.core.entity.EntityPredicates;
+import org.apache.brooklyn.entity.group.AbstractMembershipTrackingPolicy;
+import org.apache.brooklyn.entity.group.DynamicFabricImpl;
+import org.apache.brooklyn.entity.nosql.riak.RiakCluster;
+import org.apache.brooklyn.api.entity.EntitySpec;
+import org.apache.brooklyn.api.sensor.SensorEvent;
+import org.apache.brooklyn.api.sensor.SensorEventListener;
+import org.apache.brooklyn.api.location.Location;
+import org.apache.brooklyn.api.policy.PolicySpec;
+import org.apache.brooklyn.util.text.StringFunctions;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;

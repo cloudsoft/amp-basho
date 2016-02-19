@@ -19,11 +19,7 @@
 
 name: Riak Enterprise Cluster with Webapp
 
-
-location:
-  softlayer:sjc01:
-    user: root
-
+location: softlayer:sjc01
 
 services:
 
@@ -31,13 +27,13 @@ services:
   initialSize: 2
   id: mycluster
   brooklyn.config:
-    download.url.rhelcentos: http://s3.amazonaws.com/private.downloads.basho.com/riak_ee/de6708/2.0/2.0.1/rhel/6/riak-ee-2.0.1-1.el6.x86_64.rpm
+    download.url.rhelcentos: TODO
     provisioning.properties:
       osFamily: centos
       minCores: 4
       minRam: 8192
 
-- serviceType: brooklyn.entity.webapp.ControlledDynamicWebAppCluster
+- type: org.apache.brooklyn.entity.webapp.ControlledDynamicWebAppCluster
   name: My Web
   brooklyn.config:
     initialSize: 2

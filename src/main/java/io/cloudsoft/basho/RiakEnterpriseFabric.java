@@ -1,10 +1,10 @@
 package io.cloudsoft.basho;
 
-import brooklyn.config.ConfigKey;
-import brooklyn.entity.basic.ConfigKeys;
-import brooklyn.entity.group.DynamicFabric;
-import brooklyn.entity.proxying.ImplementedBy;
-import brooklyn.location.Location;
+import org.apache.brooklyn.config.ConfigKey;
+import org.apache.brooklyn.core.config.ConfigKeys;
+import org.apache.brooklyn.entity.group.DynamicFabric;
+import org.apache.brooklyn.api.entity.ImplementedBy;
+import org.apache.brooklyn.api.location.Location;
 import com.google.common.base.Function;
 import com.google.common.reflect.TypeToken;
 

@@ -14,19 +14,26 @@ For instance, deploy a Riak EE cluster with a configured elastic appserver
 by posting the following YAML to Brooklyn:
 
 ```yaml
+name: Riak with Web Cluster
+
 services:
 - type: io.cloudsoft.basho.RiakEnterpriseCluster
   id: riak-cluster
   initialSize: 5
   brooklyn.config:
     download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/6/riak-ee-2.0.5-1.el6.x86_64.rpm
+
 - type: brooklyn.entity.webapp.ControlledDynamicWebAppCluster
   initialSize: 3
   brooklyn.config:
     wars.root: https://s3-eu-west-1.amazonaws.com/brooklyn-clocker/brooklyn-example-hello-world-sql-webapp.war
     java.sysprops: 
       brooklyn.example.riak.nodes: $brooklyn:component("riak-cluster").attributeWhenReady("riak.cluster.nodeList")
-location: jclouds:aws-ec2
+
+location:
+  jclouds:aws-ec2:
+    identity: YOUR_CLOUD_IDENTIFIER
+    credential: YOUR_CLOUD_CREDENTIAL
 ```
 
 More options, and info on configuring locations, is included in the [runtime docs](src/main/docs/README.md). 

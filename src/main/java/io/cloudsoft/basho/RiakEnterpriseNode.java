@@ -1,10 +1,10 @@
 package io.cloudsoft.basho;
 
-import brooklyn.config.ConfigKey;
-import brooklyn.entity.basic.ConfigKeys;
-import brooklyn.entity.nosql.riak.RiakNode;
-import brooklyn.entity.proxying.ImplementedBy;
-import brooklyn.event.basic.PortAttributeSensorAndConfigKey;
+import org.apache.brooklyn.config.ConfigKey;
+import org.apache.brooklyn.core.config.ConfigKeys;
+import org.apache.brooklyn.entity.nosql.riak.RiakNode;
+import org.apache.brooklyn.api.entity.ImplementedBy;
+import org.apache.brooklyn.core.sensor.PortAttributeSensorAndConfigKey;
 
 @ImplementedBy(RiakEnterpriseNodeImpl.class)
 public interface RiakEnterpriseNode extends RiakNode {

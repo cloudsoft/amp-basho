@@ -1,6 +1,6 @@
 package io.cloudsoft.basho;
 
-import brooklyn.entity.nosql.riak.RiakNodeDriver;
+import org.apache.brooklyn.entity.nosql.riak.RiakNodeDriver;
 
 public interface RiakEnterpriseNodeDriver extends RiakNodeDriver {
     void initializeCluster(String name);

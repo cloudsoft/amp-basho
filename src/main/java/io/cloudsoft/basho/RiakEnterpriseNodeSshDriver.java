@@ -1,16 +1,16 @@
 package io.cloudsoft.basho;
 
-import brooklyn.entity.Entity;
-import brooklyn.entity.basic.Attributes;
-import brooklyn.entity.basic.EntityPredicates;
-import brooklyn.entity.basic.lifecycle.ScriptHelper;
-import brooklyn.entity.nosql.riak.RiakNodeImpl;
-import brooklyn.entity.nosql.riak.RiakNodeSshDriver;
-import brooklyn.entity.software.SshEffectorTasks;
-import brooklyn.location.access.BrooklynAccessUtils;
-import brooklyn.location.basic.SshMachineLocation;
-import brooklyn.util.net.Urls;
-import brooklyn.util.task.DynamicTasks;
+import org.apache.brooklyn.api.entity.Entity;
+import org.apache.brooklyn.core.entity.Attributes;
+import org.apache.brooklyn.core.entity.EntityPredicates;
+import org.apache.brooklyn.entity.software.base.lifecycle.ScriptHelper;
+import org.apache.brooklyn.entity.nosql.riak.RiakNodeImpl;
+import org.apache.brooklyn.entity.nosql.riak.RiakNodeSshDriver;
+import org.apache.brooklyn.core.effector.ssh.SshEffectorTasks;
+import org.apache.brooklyn.core.location.access.BrooklynAccessUtils;
+import org.apache.brooklyn.location.ssh.SshMachineLocation;
+import org.apache.brooklyn.util.net.Urls;
+import org.apache.brooklyn.util.core.task.DynamicTasks;
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
@@ -18,7 +18,7 @@ import com.google.common.collect.Iterables;
 
 import java.util.List;
 
-import static brooklyn.util.ssh.BashCommands.sudo;
+import static org.apache.brooklyn.util.ssh.BashCommands.sudo;
 import static java.lang.String.format;
 
 public class RiakEnterpriseNodeSshDriver extends RiakNodeSshDriver implements RiakEnterpriseNodeDriver {

@@ -1,28 +1,28 @@
 package io.cloudsoft.sample.app;
 
-import brooklyn.entity.Entity;
-import brooklyn.entity.basic.Attributes;
-import brooklyn.entity.basic.Entities;
-import brooklyn.entity.group.Cluster;
-import brooklyn.entity.proxying.EntitySpec;
-import brooklyn.location.Location;
-import brooklyn.management.ManagementContext;
-import brooklyn.test.Asserts;
-import brooklyn.test.EntityTestUtils;
-import brooklyn.test.entity.LocalManagementContextForTests;
-import brooklyn.test.entity.TestApplication;
-import brooklyn.util.http.HttpTool;
-import brooklyn.util.http.HttpToolResponse;
-import com.google.common.base.Function;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Iterables;
 import io.cloudsoft.basho.RiakEnterpriseCluster;
 import io.cloudsoft.basho.RiakEnterpriseFabric;
 import io.cloudsoft.basho.RiakEnterpriseNode;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.util.EntityUtils;
-import org.jclouds.http.HttpRequest;
+
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
+import org.apache.brooklyn.api.entity.Entity;
+import org.apache.brooklyn.api.entity.EntitySpec;
+import org.apache.brooklyn.api.location.Location;
+import org.apache.brooklyn.api.mgmt.ManagementContext;
+import org.apache.brooklyn.core.entity.Attributes;
+import org.apache.brooklyn.core.entity.Entities;
+import org.apache.brooklyn.core.test.entity.LocalManagementContextForTests;
+import org.apache.brooklyn.core.test.entity.TestApplication;
+import org.apache.brooklyn.entity.group.Cluster;
+import org.apache.brooklyn.test.Asserts;
+import org.apache.brooklyn.test.EntityTestUtils;
+import org.apache.brooklyn.util.core.http.HttpTool;
+import org.apache.brooklyn.util.core.http.HttpToolResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -31,17 +31,18 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import javax.annotation.Nullable;
-import java.net.URI;
-import java.util.List;
-import java.util.Map;
+import com.google.common.base.Function;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Iterables;
 
 public class RiakEnterpriseFabricLiveTest {
     private static final Logger LOG = LoggerFactory.getLogger(RiakEnterpriseFabricLiveTest.class);
 
     private final Map<String, String> DOWNLOAD_URLS = ImmutableMap.of(
-        "centos", "http://s3.amazonaws.com/private.downloads.basho.com/riak_ee/de6708/2.0/2.0.1/rhel/6/riak-ee-2.0.1-1.el6.x86_64.rpm",
-        "ubuntu", "http://s3.amazonaws.com/private.downloads.basho.com/riak_ee/de6708/2.0/2.0.1/ubuntu/precise/riak-ee_2.0.1-1_amd64.deb"
+        "centos", Preconditions.checkNotNull(System.getProperty("riak.download.url.rhelcentos"), "System property: riak.download.url.rhelcentos"),
+        "ubuntu", Preconditions.checkNotNull(System.getProperty("riak.download.url.ubuntu"), "System property: riak.download.url.ubuntu")
     );
 
     protected TestApplication app;

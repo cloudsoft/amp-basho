@@ -23,11 +23,11 @@ location: softlayer:sjc01
 
 services:
 
-- type: brooklyn.entity.nosql.riak.RiakCluster
+- type: org.apache.brooklyn.entity.nosql.riak.RiakCluster
   initialSize: 5
   id: mycluster
   brooklyn.config:
-    download.url.rhelcentos: http://s3.amazonaws.com/private.downloads.basho.com/riak_ee/de6708/2.0/2.0.1/rhel/6/riak-ee-2.0.1-1.el6.x86_64.rpm
+    download.url.rhelcentos: TODO
     provisioning.properties:
       osFamily: centos
       minCores: 4

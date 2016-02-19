@@ -4,16 +4,16 @@ import java.util.Set;
 
 import com.google.common.reflect.TypeToken;
 
-import brooklyn.entity.annotation.Effector;
-import brooklyn.entity.annotation.EffectorParam;
-import brooklyn.entity.nosql.riak.RiakCluster;
-import brooklyn.entity.nosql.riak.RiakNode;
-import brooklyn.entity.proxying.ImplementedBy;
-import brooklyn.event.AttributeSensor;
-import brooklyn.event.basic.AttributeSensorAndConfigKey;
-import brooklyn.event.basic.BasicAttributeSensorAndConfigKey;
-import brooklyn.event.basic.Sensors;
-import brooklyn.util.flags.SetFromFlag;
+import org.apache.brooklyn.core.annotation.Effector;
+import org.apache.brooklyn.core.annotation.EffectorParam;
+import org.apache.brooklyn.entity.nosql.riak.RiakCluster;
+import org.apache.brooklyn.entity.nosql.riak.RiakNode;
+import org.apache.brooklyn.api.entity.ImplementedBy;
+import org.apache.brooklyn.api.sensor.AttributeSensor;
+import org.apache.brooklyn.core.sensor.AttributeSensorAndConfigKey;
+import org.apache.brooklyn.core.sensor.BasicAttributeSensorAndConfigKey;
+import org.apache.brooklyn.core.sensor.Sensors;
+import org.apache.brooklyn.util.core.flags.SetFromFlag;
 
 @ImplementedBy(RiakEnterpriseClusterImpl.class)
 public interface RiakEnterpriseCluster extends RiakCluster {
