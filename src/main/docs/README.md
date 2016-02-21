@@ -30,38 +30,44 @@ open the AMP-Basho / Brooklyn console (usually on [http://localhost:8081](http:/
 paste the following YAML in to the **Add Application -> YAML** dialog:
 
 ```
-name: Simplest Riak Cluster
+name: Simple Riak Cluster
+
+services:
+- type: io.cloudsoft.basho.RiakEnterpriseCluster
+  initialSize: 3
+  download.url: YOUR_RIAK_EE_DOWNLOAD_URL
+  provisioning.properties:
+    minCores: 4
+    minRam: 8gb
+    minDisk: 500gb
 
 location:
   jclouds:aws-ec2:
     region: us-east-1
-    osFamily: centos
-    osVersionRegex: 6\..*
-    stopIptables: true
-    identity: YOUR_IDENTITY
-    credential: YOUR_CREDENTIAL
-    
-services:
-- type: io.cloudsoft.basho.RiakEnterpriseCluster
-  initialSize: 3
-  brooklyn.config:
-    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/6/riak-ee-2.0.5-1.el6.x86_64.rpm
+    identity: YOUR_CLOUD_IDENTITY
+    credential: YOUR_CLOUD_CREDENTIAL
 ```
 
-Replace `YOUR_DOWNLOAD_URL` with the URL supplied by Basho, in this case for CentOS 7,
-and replace `YOUR_IDENTITY` and `YOUR_CREDENTIAL` with the appropriate tokens for your environment.
-Other clouds -- including OpenStack and SoftLayer -- are supported,
+Replace `YOUR_RIAK_EE_DOWNLOAD_URL` with the URL supplied by Basho -- we recommend the RHEL/CentOS 7 or Ubuntu 14.04 links --
+and replace `YOUR_CLOUD_IDENTITY` and `YOUR_CLOUD_CREDENTIAL` with the appropriate tokens for your environment.
+
+Many other clouds are supported -- including OpenStack and SoftLayer -- 
 or you can provide a list of IP addresses to use machines which already exist.
-For more information on configuring locations,
+For more information on configuring locations, including fetching credentials from secure external storage,
 see the [Locations](https://brooklyn.io/v/latest/ops/locations/index.html)
 page in the [Brooklyn Users Guide](https://brooklyn.io/v/latest/index.html).
 
 **Don't have a Riak Enterprise download?**  [Open-source Riak](http://docs.basho.com/riak/latest/) 
-is supported by [Apache Brooklyn Riak blueprints](https://github.com/apache/incubator-brooklyn/blob/master/software/nosql/src/main/resources/brooklyn/entity/nosql/riak/riak.md). 
+is supported by [Apache Brooklyn Riak blueprints](https://github.com/apache/brooklyn-library/blob/master/software/nosql/src/main/resources/brooklyn/entity/nosql/riak/riak.md). 
 These blueprints can be deployed in AMP-Basho.
+Or contact [Basho](http://basho.com/) to get a trial download.
+Riak EE and these blueprints support multi-cluster replication and other features
+not available in open-source Riak.
 
-**Prefer a different OS?**  Try `osFamily: ubuntu` and `download.url.ubuntu: YOUR_URL`, or the same for `debian`.
-See the [Riak node config keys reference](docs/RiakNode-config.md) for more information. 
+**Want to specify the OS?**  By default the blueprint will detect the OS from the `download.url` and
+request an appropriate image from the cloud. You can force an OS to select with `os: rhel_7` specified on the cluster,
+or force a VM image to use with `imageId: <ID>` on the cloud. 
+See the [Riak Enterprise blueprint node reference](docs/catalog/index.html) for more information. 
 
 You can then follow the progress of the deployment in the AMP-Basho console by clicking on the
 **Applications** tab and expanding the application nodes.  Once the system is live,
@@ -128,15 +134,14 @@ For more information on managing Basho Riak from AMP-Basho, see these mini-guide
 
 * **Configuration**: AMP-Basho supports many of the [configuration options](http://docs.basho.com/riak/latest/ops/building/configuration/)
   exposed by Riak, including specifying the `clusterName` or setting an `advanced.config` file to be used.
-  There are full references for the Brooklyn config keys
-  available on [the Riak Node](docs/RiakNode-config.md) and on the [Riak Cluster](docs/RiakCluster-config.md).
+  **[See the full reference for the Riak EE blueprint config keys here.](docs/catalog/index.html)**
 
 * **Operations**: Many of the Riak management operations and monitoring ([see Riak doc](http://docs.basho.com/riak/latest/)) 
   are supported by effectors and sensors in AMP-Basho.
   For more information, see [Managing Riak from AMP-Basho](docs/managing-riak.md).
 
 To learn more about working with Apache Brooklyn blueprints,
-the [Brooklyn Blueprint Tour](https://brooklyn.io/learnmore/blueprint-tour.html) 
+the **[Brooklyn Blueprint Tour](https://brooklyn.io/learnmore/blueprint-tour.html)** 
 is a good starting point.
 
 
@@ -144,7 +149,7 @@ License
 ---
 
 AMP-Basho is built on [Cloudsoft AMP](http://www.cloudsoftcorp.com) and [Apache Brooklyn](http://brooklyn.io)
-and is copyright &copy; 2015 by Cloudsoft Corporation and Basho.
+and is copyright &copy; 2016 by Cloudsoft Corporation and Basho.
 
 License for AMP-Basho is hereby granted for non-commercial and evaluation purposes 
 under the terms of [the Cloudsoft EULA](LICENSE.txt).

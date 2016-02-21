@@ -11,7 +11,7 @@ This uses [Apache Brooklyn](http://brooklyn.apache.org)'s easy-to-use YAML bluep
 combined with [Cloudsoft](http://cloudsoftcorp.com)'s enterprise-supported 
 Application Management Platform (AMP).
 
-For instance, deploy a 5-node Riak EE cluster to CentOS by supplying the following blueprint:
+Deploy a 5-node Riak EE cluster with the following blueprint:
 
 ```yaml
 name: Riak Cluster
@@ -19,17 +19,15 @@ name: Riak Cluster
 services:
 - type: io.cloudsoft.basho.RiakEnterpriseCluster
   initialSize: 5
-  download.url: <your-riak-ee-centos-download-url-here>
+  download.url: YOUR_RIAK_EE_DOWNLOAD_URL
 
 location:
   jclouds:aws-ec2:
-    identity: YOUR_CLOUD_IDENTIFIER
+    identity: YOUR_CLOUD_IDENTITY
     credential: YOUR_CLOUD_CREDENTIAL
-    osFamily: centos
-    stopIptables: true
 ```
 
-More blueprints are available in the [runtime docs](src/main/docs/README.md),
+See the [runtime docs](src/main/docs/README.md) for more information,
 including examples for **Riak EE with a demo app** and **multi-cluster replication**. 
 
 

@@ -17,8 +17,6 @@ name: Web App with Riak Cluster
 location:
   jclouds:aws-ec2:
     region: us-east-1
-    osFamily: centos
-    osVersionRegex: 6\..*
     identity: YOUR_IDENTITY
     credential: YOUR_CREDENTIAL
     
@@ -27,15 +25,16 @@ services:
   name: Riak Cluster
   id: riak-cluster
   initialSize: 3
+  download.url: YOUR_RIAK_EE_DOWNLOAD_URL
   brooklyn.config:
-    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/YOUR_CODE/2.0/2.0.5/rhel/6/riak-ee-2.0.5-1.el6.x86_64.rpm
     riak.riakConf.additionalContent: |
       javascript.hook_pool_size = 3
       javascript.map_pool_size = 9
+
 - type: brooklyn.entity.webapp.ControlledDynamicWebAppCluster
   name: Web Cluster
   brooklyn.config:
-    wars.root: https://s3-eu-west-1.amazonaws.com/brooklyn-clocker/brooklyn-example-hello-world-sql-webapp.war
+    wars.root: "http://search.maven.org/remotecontent?filepath=org/apache/brooklyn/example/brooklyn-example-hello-world-sql-webapp/0.8.0-incubating/brooklyn-example-hello-world-sql-webapp-0.8.0-incubating.war"
     java.sysprops: 
       brooklyn.example.riak.nodes: $brooklyn:component("riak-cluster").attributeWhenReady("riak.cluster.nodeList")
 ```

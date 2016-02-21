@@ -13,8 +13,8 @@ This example combines many of the advanced blueprinting capabilities, showing:
 
 Pick and choose the components you need for your project from this example,
 supplementing as you need with thes references on
-[other Brooklyn-supported software components](https://brooklyn.io/learnmore/catalog/)
-and the configuration keys for [nodes](RiakNode-config.md) and [clusters](RiakCluster-config.md).
+[the Riak Enterprise nodes(catalog/index.html) and
+[other Brooklyn-supported software components](https://brooklyn.io/learnmore/catalog/).
 
 
 ```
@@ -28,10 +28,8 @@ services:
   id: riak-fabric
   brooklyn.config:
     cluster.initial.size: 3
-    download.url.rhelcentos: http://YOUR_DOWNLOAD_URL.FOR_EXAMPLE.s3.amazonaws.com/private.downloads.basho.com/riak_ee/XXXXXX/2.0/2.0.5/rhel/6/riak-ee-2.0.5-1.el6.x86_64.rpm
+    download.url: YOUR_RIAK_EE_DOWNLOAD_URL
     provisioning.properties:
-      osFamily: centos
-      osVersionRegex: 6\..*
       minCores: 4
       minRam: 8gb
       
@@ -58,7 +56,7 @@ services:
 - type: brooklyn.entity.webapp.ControlledDynamicWebAppCluster
   name: Web Cluster
   brooklyn.config:
-    wars.root: https://s3-eu-west-1.amazonaws.com/brooklyn-clocker/brooklyn-example-hello-world-sql-webapp.war
+    wars.root: "http://search.maven.org/remotecontent?filepath=org/apache/brooklyn/example/brooklyn-example-hello-world-sql-webapp/0.8.0-incubating/brooklyn-example-hello-world-sql-webapp-0.8.0-incubating.war"
     java.sysprops: 
       brooklyn.example.riak.nodes: $brooklyn:component("riak-fabric").attributeWhenReady("riak.cluster.nodeList")
       
