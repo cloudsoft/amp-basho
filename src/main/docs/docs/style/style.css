@@ -2,7 +2,30 @@
 body {
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;;
   font-weight: 300;
+  font-size: 12pt;
+  line-height: 18pt;
   margin: 0;
+}
+
+a {
+    color: #382;
+}
+a:hover {
+    color: #65AA34;
+}
+
+pre {
+  font-size: 85%;
+  line-height: 12pt;
+  background-color: #eee;
+  padding: 8px;
+}
+
+p > code {
+    background-color: #f4f4f4;
+    margin: -2px;
+    font-size: 95%;
+    padding: 2px;
 }
 
 .header-text {
