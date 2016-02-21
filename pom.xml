@@ -4,7 +4,7 @@
 
     <groupId>io.cloudsoft</groupId>
     <artifactId>amp-basho</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>AMP Basho</name>
@@ -15,13 +15,15 @@
     <parent>
         <groupId>org.apache.brooklyn</groupId>
         <artifactId>brooklyn-downstream-parent</artifactId>
-        <version>0.8.0-incubating</version>  <!-- BROOKLYN_VERSION -->
+        <version>0.9.0-SNAPSHOT</version>  <!-- BROOKLYN_VERSION -->
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <amp.version>3.0.0</amp.version>
+        <!-- TODO amp will require a brooklyn version bump -->
+        <amp.version>3.1.0-20160125.1743-p1</amp.version>
+        <amp.brooklyn.version>0.9.0-20160125.1743-p1</amp.brooklyn.version>
     </properties>
 
   <repositories>
@@ -45,6 +47,13 @@
         <dependency>
             <groupId>org.apache.brooklyn</groupId>
             <artifactId>brooklyn-core</artifactId>
+            <version>${brooklyn.version}</version>
+            <scope>test</scope>
+            <classifier>tests</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.brooklyn</groupId>
+            <artifactId>brooklyn-locations-jclouds</artifactId>
             <version>${brooklyn.version}</version>
             <scope>test</scope>
             <classifier>tests</classifier>
@@ -130,6 +139,11 @@
       <!-- amp profile builds with Cloudsoft AMP instead of Apache Brooklyn.
            requires assumes AMP is available in repo configured locally. -->
       <id>amp</id>
+
+      <properties>
+        <brooklyn.version>${amp.brooklyn.version}</brooklyn.version>
+      </properties>
+
       <dependencies>
         <dependency>
           <groupId>io.cloudsoft.amp</groupId>
