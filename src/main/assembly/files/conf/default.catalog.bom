@@ -1,0 +1,87 @@
+
+# this catalog bom is an illustration supplying a few useful sample items
+# and templates to get started using Brooklyn
+
+brooklyn.catalog:
+  version: 0.3.0-SNAPSHOT  # AMP_BASHO_VERSION
+  items:
+      
+  - id: riak-ee-node
+    iconUrl: http://basho.com/wp-content/uploads/2015/06/basho_vert.png
+    description: |
+      A Basho Riak Enterprise node
+    item:
+      type: io.cloudsoft.basho.RiakEnterpriseNode
+
+  - id: riak-ee-cluster
+    iconUrl: http://basho.com/wp-content/uploads/2015/06/basho_vert.png
+    description: |
+      A configured cluster of Basho Riak Enterprise nodes      
+    item:
+      type: io.cloudsoft.basho.RiakEnterpriseCluster
+
+  - id: riak-ee-fabric
+    iconUrl: http://basho.com/wp-content/uploads/2015/06/basho_vert.png
+    description: |
+      Multi-datacenter Basho Riak Enterprise clusters in any number of locations
+    item:
+      type: io.cloudsoft.basho.RiakEnterpriseFabric
+
+  - id: riak-ee-sample-wizard
+    iconUrl: http://basho.com/wp-content/uploads/2015/06/basho_vert.png
+    description: |
+      A simple wizard for creating one or more Basho Riak EE clusters.
+      You can supply multiple locations.
+    itemType: template
+    item:
+      name: Riak EE Fabric Wizard
+      
+      services:
+      - type: riak-ee-fabric
+        brooklyn.config:
+          initialSize: $brooklyn:config("riak.cluster.size")
+          download.url: $brooklyn:config("riak.download.url")
+          provisioning.properties:
+            minRam: 8gb
+            numCores: 4
+          
+      # defining this parameter allows the wizard to prompt for the URL
+      # if using the YAML composer you can delete this section and set it above
+      brooklyn.parameters:
+      - name: riak.download.url
+        label: Riak EE download URL
+        description: |
+          The private download link for accessing Riak EE. 
+          The RHEL/CentOS or Ubuntu URLs can be used, and 
+          the OS will be autodetected.
+        type: string
+        constraints:
+        - required
+      - name: riak.cluster.size
+        label: Cluster initial size
+        description: |
+          The initial number of nodes for each Riak cluster
+        type: integer
+        default: 5
+
+  - id: riak-ee-sample-template
+    iconUrl: http://basho.com/wp-content/uploads/2015/06/basho_vert.png
+    description: |
+      A simple template for creating a Basho Riak EE cluster in the composer
+    itemType: template
+    item:
+      name: Riak EE Cluster Template
+      
+      services:
+      - type: riak-ee-cluster
+        download.url: YOUR_RIAK_EE_DOWNLOAD_URL
+        initialSize: 3
+        provisioning.properties:
+          minRam: 8gb
+          numCores: 4
+      
+      location:
+        jclouds:aws-ec2:
+          identity: YOUR_CLOUD_IDENTITY
+          credential: YOUR_CLOUD_CREDENTIAL
+          region: us-west-1
