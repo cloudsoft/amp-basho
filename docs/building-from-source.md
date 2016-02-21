@@ -27,15 +27,28 @@ Instructions on running are included in the README in that tarball.
 Release Build
 ---
 
-For a release build, we want to include Cloudsoft AMP instead of Apache Brooklyn
-and ensure the latest version of the docs are built.  
-To do this you will require 
-jekyll setup (as described [here](https://github.com/apache/brooklyn-docs/blob/master/README.md)) and 
-Cloudsoft AMP available in your maven environment. 
-Then:
+For a release build, we want to:
 
-    pushd src/main/docs ; rm -rf _site ; jekyll build ; popd
-    mvn clean install -Pamp
+1. Update the catalog item reference documentation. First check the version in the `default.catalog.bom` file. Then:
+
+        mkdir -f /tmp/basho-docs
+        rm -rf /tmp/basho-docs/*
+        cd target/amp-basho-*-dist/amp-basho-*/
+        ./start.sh list-objects --yaml conf/default.catalog.bom --output-folder /tmp/basho-docs
+        
+        cd ../../..
+        rm -rf src/main/docs/docs/catalog/*
+        cp -r /tmp/basho-docs/* src/main/docs/docs/catalog/
+
+2. Build the latest version of the docs. To do this you will require 
+   jekyll setup (described [here](https://github.com/apache/brooklyn-docs/blob/master/README.md)).
+   Then:
+
+       pushd src/main/docs ; rm -rf _site ; jekyll build ; popd
+       
+3. Build with Cloudsoft AMP instead of Apache Brooklyn using the `amp` maven profile:
+      
+       mvn clean install -Pamp
 
 
 Other Ways of Running

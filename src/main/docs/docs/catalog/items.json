@@ -1,4 +1,4 @@
-var items = {
+{
   "entities" : [ {
     "name" : "riak-ee-node",
     "type" : "riak-ee-node:0.3.0",

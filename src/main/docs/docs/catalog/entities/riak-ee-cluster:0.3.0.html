@@ -18,7 +18,7 @@ under the License.
 -->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
   <head>
-    <title>Brooklyn Entity - io.cloudsoft.basho.RiakEnterpriseNodeImpl</title>
+    <title>Brooklyn Entity - riak-ee-cluster</title>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="../items.css" type="text/css" media="screen"/>
@@ -53,7 +53,7 @@ under the License.
     <script src="../items.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            var item = brooklyn.findItemOfType(items.entities, "io.cloudsoft.basho.RiakEnterpriseNodeImpl");
+            var item = brooklyn.findItemOfType(items.entities, "riak-ee-cluster:0.3.0");
             $("#summary").html(brooklyn.typeSummary(item));
             item.config.forEach(function (element) { $("#configKeys").append(brooklyn.configKeyCard(_.extend({data:element},element))); });
             item.sensors.forEach(function (element) { $("#sensors").append(brooklyn.sensorCard(element)); });

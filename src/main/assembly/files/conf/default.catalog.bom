@@ -3,20 +3,21 @@
 # and templates to get started using Brooklyn
 
 brooklyn.catalog:
-  version: 0.3.0-SNAPSHOT  # AMP_BASHO_VERSION
+  version: 0.3.0  # AMP_BASHO_VERSION
   items:
       
   - id: riak-ee-node
     iconUrl: http://basho.com/wp-content/uploads/2015/06/basho_vert.png
     description: |
-      A Basho Riak Enterprise node
+      An optimized Basho Riak Enterprise single-node deployment
     item:
       type: io.cloudsoft.basho.RiakEnterpriseNode
 
   - id: riak-ee-cluster
     iconUrl: http://basho.com/wp-content/uploads/2015/06/basho_vert.png
     description: |
-      A configured cluster of Basho Riak Enterprise nodes      
+      A configured cluster of Basho Riak Enterprise nodes
+      optimized for the OS implied by the given download.url      
     item:
       type: io.cloudsoft.basho.RiakEnterpriseCluster
 
@@ -30,8 +31,12 @@ brooklyn.catalog:
   - id: riak-ee-sample-wizard
     iconUrl: http://basho.com/wp-content/uploads/2015/06/basho_vert.png
     description: |
-      A simple wizard for creating one or more Basho Riak EE clusters.
-      You can supply multiple locations.
+      A simple wizard for creating one or more optimized Basho Riak EE clusters.
+      You can supply multiple locations to generate multiple clusters 
+      with multi-cluster replication configured.
+      The download URL and initial size are advertised as parameters.
+      Additionally, any of the config keys from 
+      riak-ee-fabric, riak-ee-cluster, or riak-ee-node can be used.
     itemType: template
     item:
       name: Riak EE Fabric Wizard
@@ -67,7 +72,10 @@ brooklyn.catalog:
   - id: riak-ee-sample-template
     iconUrl: http://basho.com/wp-content/uploads/2015/06/basho_vert.png
     description: |
-      A simple template for creating a Basho Riak EE cluster in the composer
+      A simple template for creating an optimized Basho Riak EE cluster,
+      for use in the YAML composer.
+      Edit the download.url and the location and use.
+      Additionally, any of the config keys from riak-ee-cluster can be used. 
     itemType: template
     item:
       name: Riak EE Cluster Template
