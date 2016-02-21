@@ -11,6 +11,7 @@ import org.apache.brooklyn.config.ConfigKey;
 import org.apache.brooklyn.core.annotation.Effector;
 import org.apache.brooklyn.core.annotation.EffectorParam;
 import org.apache.brooklyn.core.config.ConfigKeys;
+import org.apache.brooklyn.core.config.MapConfigKey;
 import org.apache.brooklyn.core.sensor.AttributeSensorAndConfigKey;
 import org.apache.brooklyn.core.sensor.BasicAttributeSensorAndConfigKey;
 import org.apache.brooklyn.core.sensor.Sensors;
@@ -39,6 +40,8 @@ public interface RiakEnterpriseCluster extends RiakCluster {
 
     @Effector(description="Manually initiates a fullsync operation with connected sites.")
     void triggerFullSync(@EffectorParam(name = "clusterSink", description = "cluster to make sync with") String clusterName);
+
+    // these duplicated here so they can be set on the cluster
     
     @SetFromFlag("os")
     ConfigKey<RiakOsType> OS_TYPE = RiakEnterpriseNode.OS_TYPE;
@@ -58,4 +61,6 @@ public interface RiakEnterpriseCluster extends RiakCluster {
     @SetFromFlag("downloadUrl")
     AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL = RiakEnterpriseNode.DOWNLOAD_URL; 
 
+    MapConfigKey<Object> PROVISIONING_PROPERTIES = RiakEnterpriseNode.PROVISIONING_PROPERTIES;
+    
 }

@@ -44,11 +44,11 @@ public class RiakEnterpriseFabricImpl extends DynamicFabricImpl implements RiakE
     @Override
     public void init() {
         super.init();
-        addPolicy(PolicySpec.create(MembershipTrackingPolicy.class)
+        policies().add(PolicySpec.create(MembershipTrackingPolicy.class)
                 .displayName("Riak Fabric Tracker")
                 .configure("sensorsToTrack", ImmutableSet.of(RiakEnterpriseCluster.REPLICATION_INITIALIZED))
                 .configure("group", this));
-        addEnricher(Enrichers.builder().aggregating(RiakCluster.NODE_LIST)
+        enrichers().add(Enrichers.builder().aggregating(RiakCluster.NODE_LIST)
             .fromMembers().excludingBlank()
             .publishing(RiakCluster.NODE_LIST).computing(StringFunctions.joiner(","))
             .build());
@@ -116,7 +116,7 @@ public class RiakEnterpriseFabricImpl extends DynamicFabricImpl implements RiakE
     }
 
     protected void connectEnrichers() {
-        subscribeToMembers(this, SERVICE_UP, new SensorEventListener<Boolean>() {
+        subscriptions().subscribeToMembers(this, SERVICE_UP, new SensorEventListener<Boolean>() {
             @Override
             public void onEvent(SensorEvent<Boolean> event) {
                 sensors().set(SERVICE_UP, calculateServiceUp());

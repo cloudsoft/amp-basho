@@ -4,6 +4,7 @@ import io.cloudsoft.basho.RiakEnterpriseNode.RiakOsType;
 
 import org.apache.brooklyn.config.ConfigKey;
 import org.apache.brooklyn.core.config.ConfigKeys;
+import org.apache.brooklyn.core.config.MapConfigKey;
 import org.apache.brooklyn.core.sensor.AttributeSensorAndConfigKey;
 import org.apache.brooklyn.entity.group.DynamicFabric;
 import org.apache.brooklyn.util.core.flags.SetFromFlag;
@@ -20,6 +21,8 @@ public interface RiakEnterpriseFabric extends DynamicFabric {
     ConfigKey<? extends Function<Location,String>> CLUSTER_NAMER = ConfigKeys.newConfigKey(new TypeToken<Function<Location, String>>() {},
         "riak.fabric.cluster.namer", "Function used to provide the riak.replication.clusterName for a given location");
     
+    // these duplicated here so they can be set on the cluster
+
     @SetFromFlag("os")
     ConfigKey<RiakOsType> OS_TYPE = RiakEnterpriseNode.OS_TYPE;
 
@@ -38,4 +41,6 @@ public interface RiakEnterpriseFabric extends DynamicFabric {
     @SetFromFlag("downloadUrl")
     AttributeSensorAndConfigKey<String, String> DOWNLOAD_URL = RiakEnterpriseNode.DOWNLOAD_URL; 
 
+    MapConfigKey<Object> PROVISIONING_PROPERTIES = RiakEnterpriseNode.PROVISIONING_PROPERTIES;
+    
 }
