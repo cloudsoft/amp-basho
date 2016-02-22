@@ -34,7 +34,7 @@ For a release build, we want to:
         mkdir -f /tmp/basho-docs
         rm -rf /tmp/basho-docs/*
         cd target/amp-basho-*-dist/amp-basho-*/
-        ./start.sh list-objects --yaml conf/default.catalog.bom --output-folder /tmp/basho-docs
+        ./start.sh list-objects --yaml conf/brooklyn/default.catalog.bom --output-folder /tmp/basho-docs
         
         cd ../../..
         rm -rf src/main/docs/docs/catalog/*

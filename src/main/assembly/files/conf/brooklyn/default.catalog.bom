@@ -30,6 +30,7 @@ brooklyn.catalog:
 
   - id: riak-ee-sample-wizard
     iconUrl: http://basho.com/wp-content/uploads/2015/06/basho_vert.png
+    name: Riak EE Fabric Wizard
     description: |
       A simple wizard for creating one or more optimized Basho Riak EE clusters.
       You can supply multiple locations to generate multiple clusters 
@@ -39,19 +40,20 @@ brooklyn.catalog:
       riak-ee-fabric, riak-ee-cluster, or riak-ee-node can be used.
     itemType: template
     item:
-      name: Riak EE Fabric Wizard
+      name: Riak EE Fabric
       
       services:
       - type: riak-ee-fabric
         brooklyn.config:
-          initialSize: $brooklyn:config("riak.cluster.size")
+          cluster.initial.size: $brooklyn:config("riak.cluster.size")
           download.url: $brooklyn:config("riak.download.url")
           provisioning.properties:
             minRam: 8gb
-            numCores: 4
+            minCores: 4
           
-      # defining this parameter allows the wizard to prompt for the URL
-      # if using the YAML composer you can delete this section and set it above
+      # defining these parameters allows the wizard to prompt
+      # if using the YAML composer set the two config keys above
+      # (you can delete this section)
       brooklyn.parameters:
       - name: riak.download.url
         label: Riak EE download URL
@@ -70,6 +72,7 @@ brooklyn.catalog:
         default: 5
 
   - id: riak-ee-sample-template
+    name: Riak EE Cluster Template
     iconUrl: http://basho.com/wp-content/uploads/2015/06/basho_vert.png
     description: |
       A simple template for creating an optimized Basho Riak EE cluster,
@@ -78,7 +81,7 @@ brooklyn.catalog:
       Additionally, any of the config keys from riak-ee-cluster can be used. 
     itemType: template
     item:
-      name: Riak EE Cluster Template
+      name: Riak EE Cluster
       
       services:
       - type: riak-ee-cluster

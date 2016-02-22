@@ -21,9 +21,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!-- TODO amp will require a brooklyn version bump -->
-        <amp.version>3.1.0-20160125.1743-p1</amp.version>
-        <amp.brooklyn.version>0.9.0-20160125.1743-p1</amp.brooklyn.version>
+        <amp.version>3.1.0-20160221.1833</amp.version>   <!-- AMP_VERSION -->
+        <amp.brooklyn.version>0.9.0-20160221.1833</amp.brooklyn.version>  <!-- BROOKLYN_VERSION -->
     </properties>
 
   <repositories>

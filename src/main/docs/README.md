@@ -145,6 +145,24 @@ the **[Brooklyn Blueprint Tour](https://brooklyn.io/learnmore/blueprint-tour.htm
 is a good starting point.
 
 
+Known Issues
+---
+
+* AWS VPC on Legacy Classic Accounts:  
+  If you have a pre-2014 "Classic" AWS account you may encounter the "400 VPCResourceNotSpecified" error.
+  This is because we prefer newer instance types which run on VPC.
+  Contact us for assistance configuring a "pseudo-default" VPC.
+
+* Incomplete joins:
+  It can happen when nodes are created that they cannot plan or commit following a join
+  request, if the cluster is not in a converged state.
+  This can happen particularly when adding multiple nodes in quick succession.
+  The problem clears itself when another node is join,
+  or you can manually converge the state in the UI.
+  There is work in progress to address this by following Basho best practices
+  and guarding against plan commits while the cluster is converging.
+
+
 License
 ---
 
