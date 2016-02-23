@@ -48,7 +48,7 @@ location:
     credential: YOUR_CLOUD_CREDENTIAL
 ```
 
-Replace `YOUR_RIAK_EE_DOWNLOAD_URL` with the URL supplied by Basho -- we recommend the RHEL/CentOS 7 or Ubuntu 14.04 links --
+Replace `YOUR_RIAK_EE_DOWNLOAD_URL` with the URL supplied by Basho -- Ubuntu 14.04 recommended --
 and replace `YOUR_CLOUD_IDENTITY` and `YOUR_CLOUD_CREDENTIAL` with the appropriate tokens for your environment.
 
 Many other clouds are supported -- including OpenStack and SoftLayer -- 
@@ -65,7 +65,10 @@ Riak EE and these blueprints support multi-cluster replication and other feature
 not available in open-source Riak.
 
 **Want to specify the OS?**  By default the blueprint will detect the OS from the `download.url` and
-request an appropriate image from the cloud. You can force an OS to select with `os: rhel_7` specified on the cluster,
+request an appropriate image from the cloud.
+Ubuntu 14.04 and 12.04 and RHEL/CentOS 6 and 7 are recommended
+(but take care with RHEL/CentOS images being configured nicely for cloud logins). 
+You can force an OS to select with `os: rhel_7` specified on the cluster,
 or force a VM image to use with `imageId: <ID>` on the cloud. 
 See the [Riak Enterprise blueprint node reference](docs/catalog/index.html) for more information. 
 
@@ -153,14 +156,9 @@ Known Issues
   This is because we prefer newer instance types which run on VPC.
   Contact us for assistance configuring a "pseudo-default" VPC.
 
-* Incomplete joins:
-  It can happen when nodes are created that they cannot plan or commit following a join
-  request, if the cluster is not in a converged state.
-  This can happen particularly when adding multiple nodes in quick succession.
-  The problem clears itself when another node is join,
-  or you can manually converge the state in the UI.
-  There is work in progress to address this by following Basho best practices
-  and guarding against plan commits while the cluster is converging.
+* Down-sizing issues a leave cluster + plan + commit sequence but
+  if destroying VMs it does not wait for the cluster to converge before destroying.
+  The blueprint should be more aware of cluster converging activity.
 
 
 License

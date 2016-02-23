@@ -70,6 +70,10 @@ public class RiakEnterpriseNodeImpl extends RiakNodeImpl implements RiakEnterpri
                 allowed.add(key);
             }
         }
+        if (!allowed.isEmpty() && setDefaultValue) {
+            // TODO temporarily - clear to suppress warning from 090 superclass
+            config().set(RiakEnterpriseNode.DOWNLOAD_URL, (String)null);
+        }
         return allowed;
     }
 
