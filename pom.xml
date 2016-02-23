@@ -4,7 +4,7 @@
 
     <groupId>io.cloudsoft</groupId>
     <artifactId>amp-basho</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.3.0</version>
     <packaging>jar</packaging>
 
     <name>AMP Basho</name>
