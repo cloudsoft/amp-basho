@@ -100,7 +100,7 @@ otherwise VM's you've created will be left running!),
 set up the following as you would like, and relaunch:   
 
 * **Keep it running**:  launch with `nohup` and/or install as a service in `/etc/rc.local/`
-  to have AMP-Bash restarted automatically on a server restart
+  to have AMP-Basho restarted automatically on a server restart
   
 * **Configure secure login**:  by default, AMP-Basho, like Brooklyn, runs with localhost access only;
   to set up a user and password for external access and set up `https` support,
