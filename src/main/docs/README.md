@@ -58,7 +58,7 @@ see the [Locations](https://brooklyn.io/v/latest/ops/locations/index.html)
 page in the [Brooklyn Users Guide](https://brooklyn.io/v/latest/index.html).
 
 **Don't have a Riak Enterprise download?**  [Open-source Riak](http://docs.basho.com/riak/latest/) 
-is supported by [Apache Brooklyn Riak blueprints](https://github.com/apache/brooklyn-library/blob/master/software/nosql/src/main/resources/brooklyn/entity/nosql/riak/riak.md). 
+is supported by [Apache Brooklyn Riak blueprints](https://github.com/apache/brooklyn-library/blob/master/software/nosql/src/main/resources/org/apache/brooklyn/entity/nosql/riak/riak.md). 
 These blueprints can be deployed in AMP-Basho.
 Or contact [Basho](http://basho.com/) to get a trial download.
 Riak EE and these blueprints support multi-cluster replication and other features
