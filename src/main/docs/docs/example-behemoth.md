@@ -13,7 +13,7 @@ This example combines many of the advanced blueprinting capabilities, showing:
 
 Pick and choose the components you need for your project from this example,
 supplementing as you need with the references on
-[the Riak Enterprise nodes(catalog/index.html) and
+[the Riak Enterprise nodes](catalog/index.html) and
 [other Brooklyn-supported software components](https://brooklyn.io/learnmore/catalog/).
 
 
