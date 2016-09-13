@@ -4,7 +4,7 @@
 
     <groupId>io.cloudsoft</groupId>
     <artifactId>amp-basho</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>AMP Basho</name>
@@ -15,14 +15,14 @@
     <parent>
         <groupId>org.apache.brooklyn</groupId>
         <artifactId>brooklyn-downstream-parent</artifactId>
-        <version>0.9.0-SNAPSHOT</version>  <!-- BROOKLYN_VERSION -->
+        <version>0.10.0-SNAPSHOT</version>  <!-- BROOKLYN_VERSION -->
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <amp.version>3.1.0-20160221.1833</amp.version>   <!-- AMP_VERSION -->
-        <amp.brooklyn.version>0.9.0-20160221.1833</amp.brooklyn.version>  <!-- BROOKLYN_VERSION -->
+        <amp.version>4.0.1-20160831.2103</amp.version>   <!-- AMP_VERSION -->
+        <amp.brooklyn.version>0.10.0-20160831.2103</amp.brooklyn.version>  <!-- BROOKLYN_VERSION -->
     </properties>
 
   <repositories>
